@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('order_details', function (Blueprint $table) {
             $table->foreign("order_id")->references("id")->on("orders");
             $table->foreign("menu_id")->references("id")->on("menus");
+            $table->string("notes");
             $table->timestamps();
         });
     }
