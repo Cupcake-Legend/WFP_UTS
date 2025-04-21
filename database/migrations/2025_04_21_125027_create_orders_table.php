@@ -16,8 +16,8 @@ return new class extends Migration
             $table->enum("status", ["PROCESS", "DONE"]);
             $table->enum("order_method", ["DINEIN", "TAKEAWAY"]);
             $table->integer("total");
-            $table->foreign("user_id")->references("id")->on("users");
-            $table->foreign("payment_method_id")->references("id")->on("payment_methods");
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('payment_method_id')->constrained('payment_methods');
             $table->timestamps();
         });
     }

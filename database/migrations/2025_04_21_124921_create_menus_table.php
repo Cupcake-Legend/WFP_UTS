@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum("porsi", ["Small", "Medium", "Large"]);
             $table->integer("stock");
             $table->integer("point");
-            $table->foreign("category_id")->references("id")->on("categories");
+            $table->foreignId('category_id')->constrained('categories');
             $table->timestamps();
         });
     }

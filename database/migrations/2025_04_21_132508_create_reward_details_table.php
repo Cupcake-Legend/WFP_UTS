@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reward_details', function (Blueprint $table) {
-            $table->foreign("reward_id")->references("id")->on("rewards");
-            $table->foreign("user_id")->references("id")->on("users");
+            $table->foreignId('reward_id')->constrained('rewards');
+            $table->foreignId('user_id')->constrained('users');
             $table->enum("is_claimed", ["YES", "NO"]);
             $table->timestamps();
         });

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("name");
             $table->integer("poin");
-            $table->foreign("menu_id")->references("id")->on("menus");
+            $table->foreignId('menu_id')->constrained('menus');
             $table->timestamps();
         });
     }
