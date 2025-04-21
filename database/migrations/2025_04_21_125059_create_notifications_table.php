@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->string("isi");
+            $table->foreignId("order_id")->constrained("orders");
             $table->timestamps();
         });
     }
