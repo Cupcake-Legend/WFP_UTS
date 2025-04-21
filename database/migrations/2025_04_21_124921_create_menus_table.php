@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string("deskripsi");
             $table->integer("harga");
             $table->string("nutrisi");
+            $table->string("image");
             $table->enum("porsi", ["Small", "Medium", "Large"]);
             $table->integer("stock");
             $table->integer("point");
