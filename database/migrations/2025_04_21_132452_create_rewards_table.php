@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('rewards', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string("no_hp");
-            $table->string("alamat");
+            $table->string("name");
             $table->integer("poin");
-            $table->enum("roles", ["user", "admin"]);
+            $table->foreign("menu_id")->references("id")->on("menus");
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('rewards');
     }
 };
