@@ -28,8 +28,18 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('menu');
 });
+Route::get('/info', function () {
+    return view('information');
+});Route::get('/nutrition', function () {
+    return view('nutri');
+});Route::get('/order', function () {
+    return view('order');
+});Route::get('/pay', function () {
+    return view('payment');
+});
+
 
 //Route::middleware(["auth"])->group(function () {
 
