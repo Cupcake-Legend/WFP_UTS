@@ -46,7 +46,7 @@
                         <h5 id="modal-name"></h5>
                         <p id="modal-price"></p>
                         <p id="modal-description"></p>
-                        <p id = "modal-nutrisi"></p>
+                        <p id ="modal-nutrition"></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
