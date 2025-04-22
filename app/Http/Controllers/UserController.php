@@ -13,6 +13,9 @@ class UserController extends Controller
     public function index()
     {
         //
+        $users = User::all();
+
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -20,7 +23,7 @@ class UserController extends Controller
      */
     public function create()
     {
-
+        return view('users.create');
 
 
         //
@@ -52,7 +55,7 @@ class UserController extends Controller
         $user->roles = $request->roles;
         $user->save();
 
-        //return redirect()->route()->with("success", "User Created!");
+        return redirect()->route('users.index')->with("success", "User Created!");
     }
 
     /**
@@ -68,7 +71,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -90,14 +94,18 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
 
+
         if ($request->filled("password")) {
             $user->password = bcrypt($request->password);
         }
         $user->no_hp = $request->no_hp;
         $user->alamat = $request->alamat;
+        $user->roles = $request->roles;
+
         $user->save();
 
-        //return redirect()->route()->with("success", "User updated!");
+        return redirect()->route('users.index')->with("success", "User Updated!");
+
 
 
 
@@ -112,6 +120,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $user->delete();
+        return redirect()->route('users.index')->with("success", "User Deleted!");
         //
     }
 }
