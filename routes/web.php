@@ -6,6 +6,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\PaymentMethodController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RewardController;
 use App\Http\Controllers\RewardDetailController;
 use App\Http\Controllers\UserController;
@@ -65,3 +66,14 @@ Route::resource("orders", OrderController::class);
 
 Route::resource("orderDetails", OrderDetailController::class);
 //});
+
+
+Route::prefix('reports')->group(function () {
+    Route::get('/', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/most-food-category', [ReportController::class, 'mostFoodCategory'])->name('reports.mostFoodCategory');
+    Route::get('/highest-avg-price-category', [ReportController::class, 'highestAvgPriceCategory'])->name('reports.highestAvgPriceCategory');
+    Route::get('/menu-count-per-category', [ReportController::class, 'menuCountPerCategory'])->name('reports.menuCountPerCategory');
+    Route::get('/most-expensive-and-cheapest', [ReportController::class, 'mostExpensiveAndCheapestMenu'])->name('reports.mostExpensiveAndCheapest');
+    Route::get('/avg=price-per-category', [ReportController::class, 'avgPricePerCategory'])->name('reports.avgPricePerCategory');
+
+});
