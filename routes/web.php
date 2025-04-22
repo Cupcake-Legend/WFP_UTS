@@ -65,6 +65,9 @@ Route::resource("rewardDetails", RewardDetailController::class);
 Route::resource("orders", OrderController::class);
 
 Route::resource("orderDetails", OrderDetailController::class);
+
+Route::get('/filter-category', [MenuController::class, 'filterCategory']);
+
 //});
 
 
@@ -74,6 +77,5 @@ Route::prefix('reports')->group(function () {
     Route::get('/highest-avg-price-category', [ReportController::class, 'highestAvgPriceCategory'])->name('reports.highestAvgPriceCategory');
     Route::get('/menu-count-per-category', [ReportController::class, 'menuCountPerCategory'])->name('reports.menuCountPerCategory');
     Route::get('/most-expensive-and-cheapest', [ReportController::class, 'mostExpensiveAndCheapestMenu'])->name('reports.mostExpensiveAndCheapest');
-    Route::get('/avg=price-per-category', [ReportController::class, 'avgPricePerCategory'])->name('reports.avgPricePerCategory');
-
+    Route::get('/avg-price-per-category', [ReportController::class, 'avgPricePerCategory'])->name('reports.avgPricePerCategory');
 });

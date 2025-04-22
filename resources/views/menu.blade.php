@@ -10,6 +10,13 @@
             <button class="filter-button">Strength</button>
             <button class="filter-button">Caffeine</button>
             <button class="filter-button">Source</button>
+            <select id="categoryFilter">
+                <option value="All">All Categories</option>
+                <option value="Tea">Tea</option>
+                <option value="Coffee">Coffee</option>
+                <option value="Snacks">Snacks</option>
+                <option value="Desserts">Desserts</option>
+            </select>
         </section>
 
         <!-- PRODUCT GRID -->
@@ -91,6 +98,23 @@
                     modal.find('#modal-description').text(menuDescription);
                     modal.find('#modal-image').attr('src', menuImage);
                     modal.find('#modal-nutrition').text(menuNutrition);
+                });
+            });
+            $('#categoryFilter').on('change', function() {
+                var selectedCategory = $(this).val();
+
+                $.ajax({
+                    url: '/filter-category',
+                    method: 'GET',
+                    data: {
+                        category: selectedCategory
+                    },
+                    success: function(response) {
+                        $('.products').html(response.html);
+                    },
+                    error: function() {
+                        alert('Gagal memuat data menu.');
+                    }
                 });
             });
         </script>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 
@@ -85,5 +86,26 @@ class MenuController extends Controller
     public function destroy(Menu $menu)
     {
         $menu->delete();
+    }
+
+    public function filterCategory(Request $request)
+    {
+        $category = $request->get('category');
+
+        if ($category === 'All') {
+            $menus = Menu::all();
+        } else {
+            $categoryModel = Category::where('name', $category)->first();
+
+            if ($categoryModel) {
+                $menus = Menu::where('category_id', $categoryModel->id)->get();
+            } else {
+                $menus = collect();
+            }
+        }
+
+        $html = view('partials.menu-items', compact('menus'))->render();
+
+        return response()->json(['html' => $html]);
     }
 }
