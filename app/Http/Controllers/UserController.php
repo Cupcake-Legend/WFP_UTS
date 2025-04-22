@@ -76,6 +76,31 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            "name" => "required|string",
+            "email" => "required|string|unique:users,email,$id",
+            "password" => "nullable|string|min:6",
+            "no_hp" => "required|string|min:11",
+            "alamat" => "required|string",
+            "roles" => "required|in:user,admin"
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->filled("password")) {
+            $user->password = bcrypt($request->password);
+        }
+        $user->no_hp = $request->no_hp;
+        $user->alamat = $request->alamat;
+        $user->save();
+
+        //return redirect()->route()->with("success", "User updated!");
+
+
+
         //
     }
 
@@ -84,6 +109,9 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
+        $user = User::findOrFail($id);
+
+        $user->delete();
         //
     }
 }

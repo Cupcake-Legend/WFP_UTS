@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderDetail;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -28,7 +31,40 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'payment_method_id' => 'required|exists:payment_methods,id',
+            'total' => 'required|integer',
+            'status' => 'required|in:PROCESS,DONE',
+            'order_method' => 'required|in:DINEIN,TAKEAWAY',
+            'order_details' => 'required|array',
+            'order_details.*.menu_id' => 'required|exists:menus,id',
+            'order_details.*.notes' => 'nullable|string',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $order = Order::create([
+                'user_id' => $request->user_id,
+                'payment_method_id' => $request->payment_method_id,
+                'total' => $request->total,
+                'status' => $request->status,
+                'order_method' => $request->order_method,
+            ]);
+
+            foreach ($request->order_details as $orderDetail) {
+                OrderDetail::create([
+                    'order_id' => $order->id,
+                    'menu_id' => $orderDetail['menu_id'],
+                    'notes' => $orderDetail['notes'] ?? '',
+                ]);
+            }
+
+            DB::commit();
+        } catch (Exception $ex) {
+            DB::rollBack();
+        }
     }
 
     /**
@@ -53,6 +89,22 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         //
+        $order->status = $request->status;
+        $order->order_method = $request->order_method;
+        $order->total = $request->total;
+        $order->save();
+
+        if ($request->has('order_details')) {
+            foreach ($request->order_details as $orderDetailData) {
+                OrderDetail::updateOrCreate(
+                    [
+                        'order_id' => $order->id,
+                        'menu_id' => $orderDetailData['menu_id']
+                    ],
+                    ['notes' => $orderDetailData['notes'] ?? '']
+                );
+            }
+        }
     }
 
     /**
@@ -60,6 +112,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        $order->orderDetails()->delete();
+        $order->delete();
     }
 }

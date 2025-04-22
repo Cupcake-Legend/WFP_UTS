@@ -11,8 +11,16 @@ class RewardDetail extends Model
     use HasFactory;
 
     protected $fillable = [
+        "reward_id",
+        "user_id",
         "is_claimed"
     ];
+
+    protected $attributes = [
+        "is_claimed" => "NO"
+    ];
+
+
 
     public function reward(): BelongsTo
     {

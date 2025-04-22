@@ -28,7 +28,16 @@ class RewardDetailController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'reward_id' => 'required|exists:rewards,id',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        $rewardDetail = new RewardDetail();
+
+        $rewardDetail->reward_id = $request->reward_id;
+        $rewardDetail->user_id = $request->user_id;
+        $rewardDetail->save();
     }
 
     /**
@@ -52,7 +61,17 @@ class RewardDetailController extends Controller
      */
     public function update(Request $request, RewardDetail $rewardDetail)
     {
-        //
+        $request->validate([
+            'reward_id' => 'required|exists:rewards,id',
+            'user_id' => 'required|exists:users,id',
+            'is_claimed' => 'required|in:YES,NO'
+        ]);
+
+
+        $rewardDetail->reward_id = $request->reward_id;
+        $rewardDetail->user_id = $request->user_id;
+        $rewardDetail->is_claimed = $request->is_claimed;
+        $rewardDetail->save();
     }
 
     /**
@@ -60,6 +79,6 @@ class RewardDetailController extends Controller
      */
     public function destroy(RewardDetail $rewardDetail)
     {
-        //
+        $rewardDetail->delete();
     }
 }

@@ -29,6 +29,25 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            "name" => "required|string",
+            "deskripsi" => "required|string",
+            "harga" => "required|integer",
+            "nutrisi" => "required|string",
+            "stock" => "required|integer",
+            "poin" => "required|integer",
+            "porsi" => "required|in:Small,Medium,Large",
+        ]);
+
+        $menu = new Menu();
+        $menu->name = $request->name;
+        $menu->deskripsi = $request->deskripsi;
+        $menu->harga = $request->harga;
+        $menu->nutrisi = $request->nutrisi;
+        $menu->stock = $request->stock;
+        $menu->poin = $request->poin;
+        $menu->porsi = $request->porsi;
+        $menu->save();
     }
 
     /**
@@ -42,17 +61,21 @@ class MenuController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Menu $menu)
-    {
-        //
-    }
+    public function edit(Menu $menu) {}
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Menu $menu)
     {
-        //
+        $menu->name = $request->name;
+        $menu->deskripsi = $request->deskripsi;
+        $menu->harga = $request->harga;
+        $menu->nutrisi = $request->nutrisi;
+        $menu->stock = $request->stock;
+        $menu->poin = $request->poin;
+        $menu->porsi = $request->porsi;
+        $menu->save();
     }
 
     /**
@@ -60,6 +83,6 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
-        //
+        $menu->delete();
     }
 }

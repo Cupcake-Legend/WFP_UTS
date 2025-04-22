@@ -28,7 +28,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "name" => "required|string",
+            "deskripsi" => "required|string",
+        ]);
+
+        $category = new Category();
+
+        $category->name = $request->name;
+        $category->deskripsi = $request->deskripsi;
+        $category->save();
     }
 
     /**
@@ -52,7 +61,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $category->name = $request->name;
+        $category->deskripsi = $request->deskripsi;
     }
 
     /**
@@ -60,6 +70,6 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
     }
 }

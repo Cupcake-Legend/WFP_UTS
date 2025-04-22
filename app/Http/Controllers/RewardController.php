@@ -28,6 +28,18 @@ class RewardController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            "name" => "required|string",
+            "poin" => "required|integer",
+            "menu_id" => "required|integer|exists:menus,id",
+        ]);
+
+        $reward = new Reward();
+        $reward->name = $request->name;
+        $reward->poin = $request->poin;
+        $reward->menu_id = $request->menu_id;
+
+        $reward->save();
         //
     }
 
@@ -52,7 +64,11 @@ class RewardController extends Controller
      */
     public function update(Request $request, Reward $reward)
     {
-        //
+        $reward->name = $request->name;
+        $reward->poin = $request->poin;
+        $reward->menu_id = $request->menu_id;
+
+        $reward->save();
     }
 
     /**
@@ -60,6 +76,6 @@ class RewardController extends Controller
      */
     public function destroy(Reward $reward)
     {
-        //
+        $reward->delete();
     }
 }
