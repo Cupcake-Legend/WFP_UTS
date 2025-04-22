@@ -33,4 +33,9 @@ class Order extends Model
     {
         return $this->hasMany(OrderDetail::class);
     }
+
+    public function paymentMethod(): BelongsTo
+    {
+        return $this->belongsTo(PaymentMethod::class);
+    }
 }
