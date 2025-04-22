@@ -25,9 +25,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+//Route::middleware(["auth"])->group(function () {
 
 Route::resource("users", UserController::class);
 
@@ -46,3 +50,4 @@ Route::resource("rewardDetails", RewardDetailController::class);
 Route::resource("orders", OrderController::class);
 
 Route::resource("orderDetails", OrderDetailController::class);
+//});
