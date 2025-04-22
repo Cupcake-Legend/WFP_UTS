@@ -26,26 +26,30 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
-Route::get('/', function () {
-    return view('menu');
-});
+// ill do this later - cupcakelegend
 Route::get('/info', function () {
     return view('information');
-});Route::get('/nutrition', function () {
-    return view('nutri');
-});Route::get('/order', function () {
+});
+Route::get('/nutrition', function () {
+    return view('nutrition');
+});
+Route::get('/order', function () {
     return view('order');
-});Route::get('/pay', function () {
+});
+Route::get('/pay', function () {
     return view('payment');
 });
 
 
 //Route::middleware(["auth"])->group(function () {
 
-Route::resource("users", UserController::class);
+Route::get("register", [UserController::class, "create"])->name("register");
 
-Route::resource("menus", MenuController::class);
+Route::get("/", [MenuController::class, "index"]);
+
+Route::resource("users", UserController::class)->except("create");
+
+Route::resource("menus", MenuController::class)->except("index");
 
 Route::resource("paymentMethods", PaymentMethodController::class);
 

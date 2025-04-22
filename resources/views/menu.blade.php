@@ -1,24 +1,7 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="light"> 
+@extends('layouts.main')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tea Menu</title>
-    @vite('resources/css/app.css')
-</head>
-
-<body>
+@section('content')
     <div class="container">
-        <!-- HEADER -->
-        <header class="header">
-            <div class="nav-buttons">
-                <button class="nav-btn">Login</button>
-                <button class="nav-btn">Menu</button>
-                <button class="nav-btn">Reward</button>
-            </div>
-            <input class="search-bar" type="text" placeholder="Search Menu...">
-        </header>
 
         <!-- FILTER BUTTONS -->
         <section class="filter-section">
@@ -31,14 +14,47 @@
 
         <!-- PRODUCT GRID -->
         <section class="products">
-            @foreach(['Green Tea' => 15, 'White Tea' => 11, 'Super Matcha' => 12, 'Rooibos Fruit Tea' => 12] as $name => $price)
+
+            @foreach ($menus as $menu)
                 <div class="product">
-                    <div class="image"></div>
-                    <h5>{{ $name }}</h5>
-                    <p>${{ $price }}</p>
+                    <div class="image"><img src="" alt="{{ $menu->image }}"></div>
+                    <h5>{{ $menu->name }}</h5>
+                    <p>Rp{{ $menu->harga }}</p>
+
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#menuModal"
+                        data-id="{{ $menu->id }}" data-name="{{ $menu->name }}" data-price="{{ $menu->harga }}"
+                        data-description="{{ $menu->deskripsi }}" data-image="{{ $menu->image }}"
+                        data-nutrition = "{{ $menu->nutrisi }}">
+                        Details
+                    </button>
+
                 </div>
             @endforeach
         </section>
+
+        {{-- MODAL --}}
+
+        <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="menuModalLabel">Menu Details</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img id="modal-image" src="" alt="Menu Image" class="img-fluid mb-3">
+                        <h5 id="modal-name"></h5>
+                        <p id="modal-price"></p>
+                        <p id="modal-description"></p>
+                        <p id = "modal-nutrisi"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <!-- BESTSELLERS -->
         <section class="bestsellers">
@@ -55,18 +71,27 @@
                 </div>
             </div>
         </section>
+    @endsection
 
-        <!-- FOOTER -->
-        <footer>
-            <h4>LE TEAM</h4>
-            <ul>
-                <li>1. Nico Jaco Josef 160420219</li>
-                <li>2. Darren Gideon Sutanto 160420232</li>
-                <li>3. Matthew Gideon 160420265</li>
-                <li>4. Stanley Alexander Gondowidjojo 160420239</li>
-                <li>5. James Edward Simonta 160420248</li>
-            </ul>
-        </footer>
-    </div>
-</body>
-</html>
+    @section('scripts')
+        <script>
+            $(document).ready(function() {
+                $('#menuModal').on('show.bs.modal', function(event) {
+                    var button = $(event.relatedTarget);
+                    var menuId = button.data('id');
+                    var menuName = button.data('name');
+                    var menuPrice = button.data('price');
+                    var menuDescription = button.data('description');
+                    var menuImage = button.data('image');
+                    var menuNutrition = button.data('nutrition');
+
+                    var modal = $(this);
+                    modal.find('#modal-name').text(menuName);
+                    modal.find('#modal-price').text('Rp ' + menuPrice);
+                    modal.find('#modal-description').text(menuDescription);
+                    modal.find('#modal-image').attr('src', menuImage);
+                    modal.find('#modal-nutrition').text(menuNutrition);
+                });
+            });
+        </script>
+    @endsection
