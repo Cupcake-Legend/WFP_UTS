@@ -104,7 +104,7 @@ class MenuController extends Controller
             }
         }
 
-        $html = view('partials.menu-items', compact('menus'))->render();
+        $html = view('partials.menu-item', compact('menus'))->render();
 
         return response()->json(['html' => $html]);
     }

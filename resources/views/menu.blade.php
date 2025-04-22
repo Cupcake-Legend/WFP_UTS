@@ -99,22 +99,23 @@
                     modal.find('#modal-image').attr('src', menuImage);
                     modal.find('#modal-nutrition').text(menuNutrition);
                 });
-            });
-            $('#categoryFilter').on('change', function() {
-                var selectedCategory = $(this).val();
 
-                $.ajax({
-                    url: '/filter-category',
-                    method: 'GET',
-                    data: {
-                        category: selectedCategory
-                    },
-                    success: function(response) {
-                        $('.products').html(response.html);
-                    },
-                    error: function() {
-                        alert('Gagal memuat data menu.');
-                    }
+                $('#categoryFilter').on('change', function() {
+                    var selectedCategory = $(this).val();
+
+                    $.ajax({
+                        url: '/filter-category',
+                        method: 'GET',
+                        data: {
+                            category: selectedCategory
+                        },
+                        success: function(response) {
+                            $('.products').html(response.html);
+                        },
+                        error: function() {
+                            alert('Gagal memuat data menu.');
+                        }
+                    });
                 });
             });
         </script>
