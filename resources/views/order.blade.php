@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.main')
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Green Tea Info</title>
-    {{-- @vite('resources/css/app.css') --}}
-</head>
-
-<body>
+@section('content')
     <div class="container">
         <header>
             <div>
@@ -66,18 +58,4 @@
             </div>
         </div>
     </section>
-
-    <footer>
-        <h4>LE TEAM</h4>
-        <ul>
-            <li>1. Nico Jaco Josef 160420219</li>
-            <li>2. Darren Gideon Sutanto 160420232</li>
-            <li>3. Matthew Gideon 160420265</li>
-            <li>4. Stanley Alexander Gondowidjojo 160420239</li>
-            <li>5. James Edward Simonta 160420248</li>
-        </ul>
-    </footer>
-    </div>
-</body>
-
-</html>
+@endsection

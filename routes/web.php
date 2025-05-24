@@ -36,6 +36,11 @@ Route::get('/nutrition', function () {
     return view('nutrition');
 });
 
+Route::get('/filter-category', [MenuController::class, 'filterCategory']);
+
+Route::resource("users", UserController::class)->except("create", "index");
+
+
 
 
 // ROUTE KHUSUS yang belum LOGIN !! -cupcake legend
@@ -52,54 +57,53 @@ Route::middleware("auth")->group(function () {
 });
 
 // ROUTE KHUSUS ADMIN !! -cupcake legend
-Route::middleware("auth:admin")->group(function () {
-    Route::get("/users/index", [UserController::class, "index"])->name("users.index");
+Route::middleware(["auth", "role:admin"])->group(function () {
+
+    //USERS
+    Route::get("/users/all", [UserController::class, "index"])->name("users.index");
+
+    //CATEGORIES
+    Route::resource("categories", CategoryController::class);
+
+    //MENU
+    Route::resource("menus", MenuController::class)->except("index");
+
+    //PAYMENT METHODS
+    Route::resource("paymentMethods", PaymentMethodController::class);
+
+
+
+    Route::prefix('reports')->group(function () {
+        Route::get('/', [ReportController::class, 'index'])->name('reports.index');
+        Route::get('/most-food-category', [ReportController::class, 'mostFoodCategory'])->name('reports.mostFoodCategory');
+        Route::get('/highest-avg-price-category', [ReportController::class, 'highestAvgPriceCategory'])->name('reports.highestAvgPriceCategory');
+        Route::get('/menu-count-per-category', [ReportController::class, 'menuCountPerCategory'])->name('reports.menuCountPerCategory');
+        Route::get('/most-expensive-and-cheapest', [ReportController::class, 'mostExpensiveAndCheapestMenu'])->name('reports.mostExpensiveAndCheapest');
+        Route::get('/avg-price-per-category', [ReportController::class, 'avgPricePerCategory'])->name('reports.avgPricePerCategory');
+    });
+});
+
+//ROUTE KHUSUS USER!! -cupcake legend
+Route::middleware(["auth", "role:user"])->group(function () {
+
+    //utk orders sm orderdetails blm tk pikirin jg apa hanya user yg bisa akses atau admin apa ada akses apa -cupcake legend
+    Route::resource("orders", OrderController::class);
+
+    Route::resource("orderDetails", OrderDetailController::class);
+
+
+    Route::get('/order', function () {
+        return view('order');
+    });
+    Route::get('/pay', function () {
+        return view('payment');
+    });
 });
 
 
-
-
-
-
-
-
-
-Route::resource("users", UserController::class)->except("create");
-
-
-Route::resource("paymentMethods", PaymentMethodController::class);
-
-Route::resource("categories", CategoryController::class);
-
+//ROUTE sg di bawah ini belum tk pikirin apa masuk user atau admin -cupcake legend
 Route::resource("notifications", NotificationController::class);
 
-Route::resource("rewards", RewardController::class);
+Route::resource("rewards", controller: RewardController::class);
 
 Route::resource("rewardDetails", RewardDetailController::class);
-
-Route::resource("orders", OrderController::class);
-
-Route::resource("orderDetails", OrderDetailController::class);
-
-Route::resource("menus", MenuController::class)->except("index");
-
-
-Route::get('/order', function () {
-    return view('order');
-});
-Route::get('/pay', function () {
-    return view('payment');
-});
-
-Route::get('/filter-category', [MenuController::class, 'filterCategory']);
-//});
-
-
-Route::prefix('reports')->group(function () {
-    Route::get('/', [ReportController::class, 'index'])->name('reports.index');
-    Route::get('/most-food-category', [ReportController::class, 'mostFoodCategory'])->name('reports.mostFoodCategory');
-    Route::get('/highest-avg-price-category', [ReportController::class, 'highestAvgPriceCategory'])->name('reports.highestAvgPriceCategory');
-    Route::get('/menu-count-per-category', [ReportController::class, 'menuCountPerCategory'])->name('reports.menuCountPerCategory');
-    Route::get('/most-expensive-and-cheapest', [ReportController::class, 'mostExpensiveAndCheapestMenu'])->name('reports.mostExpensiveAndCheapest');
-    Route::get('/avg-price-per-category', [ReportController::class, 'avgPricePerCategory'])->name('reports.avgPricePerCategory');
-});
