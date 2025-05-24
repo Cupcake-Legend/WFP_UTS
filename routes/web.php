@@ -27,30 +27,45 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-// ill do this later - cupcakelegend
+//ROUTE yang bisa diakses SEMUA
+Route::get("/", [MenuController::class, "index"])->name("index");
 Route::get('/info', function () {
     return view('information');
 });
 Route::get('/nutrition', function () {
     return view('nutrition');
 });
-Route::get('/order', function () {
-    return view('order');
+
+
+
+// ROUTE KHUSUS yang belum LOGIN !! -cupcake legend
+Route::middleware("guest")->group(function () {
+
+    Route::get("/register", [UserController::class, "create"])->name("register");
+
+    Route::get("/login", [UserController::class, "loginView"])->name("login");
+    Route::post("/login", [UserController::class, "login"])->name("loginAttempt");
 });
-Route::get('/pay', function () {
-    return view('payment');
+
+Route::middleware("auth")->group(function () {
+    Route::post("/logout", [UserController::class, "logout"])->name("logout");
+});
+
+// ROUTE KHUSUS ADMIN !! -cupcake legend
+Route::middleware("auth:admin")->group(function () {
+    Route::get("/users/index", [UserController::class, "index"])->name("users.index");
 });
 
 
-//Route::middleware(["auth"])->group(function () {
 
-Route::get("register", [UserController::class, "create"])->name("register");
 
-Route::get("/", [MenuController::class, "index"]);
+
+
+
+
 
 Route::resource("users", UserController::class)->except("create");
 
-Route::resource("menus", MenuController::class)->except("index");
 
 Route::resource("paymentMethods", PaymentMethodController::class);
 
@@ -66,8 +81,17 @@ Route::resource("orders", OrderController::class);
 
 Route::resource("orderDetails", OrderDetailController::class);
 
-Route::get('/filter-category', [MenuController::class, 'filterCategory']);
+Route::resource("menus", MenuController::class)->except("index");
 
+
+Route::get('/order', function () {
+    return view('order');
+});
+Route::get('/pay', function () {
+    return view('payment');
+});
+
+Route::get('/filter-category', [MenuController::class, 'filterCategory']);
 //});
 
 

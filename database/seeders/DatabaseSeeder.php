@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\OrderDetail;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,8 +22,15 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
+            UserSeeder::class,
             CategorySeeder::class,
             MenuSeeder::class,
+            PaymentMethodSeeder::class,
+            RewardSeeder::class,
+            OrderSeeder::class,
+            OrderDetailSeeder::class,
+            RewardDetailSeeder::class,
+            NotificationSeeder::class
         ]);
     }
 }

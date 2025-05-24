@@ -25,13 +25,7 @@
                 <label>Alamat</label>
                 <input type="text" name="alamat" class="form-control">
             </div>
-            <div class="mb-3">
-                <label>Role</label>
-                <select name="roles" class="form-control">
-                    <option value="user">User</option>
-                    <option value="admin">Admin</option>
-                </select>
-            </div>
+
             <button type="submit" class="btn btn-primary">Simpan</button>
         </form>
     </div>

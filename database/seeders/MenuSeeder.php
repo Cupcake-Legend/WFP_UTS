@@ -23,7 +23,7 @@ class MenuSeeder extends Seeder
                 'porsi' => 'Medium',
                 'stock' => 20,
                 'point' => 10,
-                'category_id' => 1, 
+                'category_id' => 1,
             ],
             [
                 'name' => 'Espresso',
@@ -34,7 +34,18 @@ class MenuSeeder extends Seeder
                 'porsi' => 'Small',
                 'stock' => 30,
                 'point' => 12,
-                'category_id' => 2,  
+                'category_id' => 2,
+            ],
+            [
+                'name' => 'Taco',
+                'deskripsi' => 'LeBron\'s favorite dish',
+                'harga' => 20000,
+                'nutrisi' => 'Calories: 400, Fat: 0g, Sugar: 0g',
+                'image' => 'taco.jpg',
+                'porsi' => 'Small',
+                'stock' => 30,
+                'point' => 12,
+                'category_id' => 2,
             ],
             [
                 'name' => 'Choco Cake',
@@ -45,7 +56,7 @@ class MenuSeeder extends Seeder
                 'porsi' => 'Large',
                 'stock' => 15,
                 'point' => 15,
-                'category_id' => 4,  
+                'category_id' => 4,
             ],
         ]);
     }

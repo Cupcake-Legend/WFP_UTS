@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -32,6 +34,46 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            "email" => "required|string",
+            "password" => "required|string"
+        ]);
+
+        $email = $request->email;
+        $password = $request->password;
+
+        if (Auth::attempt(["email" => $email, "password" => $password])) {
+            $request->session()->regenerate();
+
+            return redirect()->intended(route("index"));
+        } else {
+
+
+            return back()->withErrors([
+                'email' => 'Invalid credentials.',
+            ])->onlyInput('email');
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect(route("index"));
+    }
+
+    public function loginView()
+    {
+        return view("auth.login");
+    }
+
+
     public function store(Request $request)
     {
         //
@@ -41,18 +83,17 @@ class UserController extends Controller
             "password" => "required|string|min:6",
             "no_hp" => "required|string|min:11",
             "alamat" => "required|string",
-            "roles" => "required|in:user,admin"
         ]);
 
         $user = new User();
 
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = bcrypt($request->password);
+        $user->password = Hash::make($request->password);
         $user->no_hp = $request->no_hp;
         $user->alamat = $request->alamat;
         $user->poin = 0;
-        $user->roles = $request->roles;
+        $user->roles = "user";
         $user->save();
 
         return redirect()->route('users.index')->with("success", "User Created!");
