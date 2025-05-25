@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer("stock");
             $table->integer("point");
             $table->foreignId('category_id')->constrained('categories');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

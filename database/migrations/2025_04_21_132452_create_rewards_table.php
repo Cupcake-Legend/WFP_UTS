@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string("name");
             $table->integer("poin");
             $table->foreignId('menu_id')->constrained('menus');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
