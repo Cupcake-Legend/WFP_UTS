@@ -94,13 +94,6 @@ header,.filters,.products,.bestsellers,footer {
     background-color: var(--text);
 }
 
-.search-bar {
-    margin-top: 10px;
-    padding: 8px;
-    flex: 1 0 200px;
-    border: 1px solid var(--text);
-    border-radius: 5px;
-}
 
 /* Filters */
 .filter-section {

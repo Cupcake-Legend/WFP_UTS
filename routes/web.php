@@ -59,6 +59,9 @@ Route::middleware("auth")->group(function () {
 // ROUTE KHUSUS ADMIN !! -cupcake legend
 Route::middleware(["auth", "role:admin"])->prefix("admin")->group(function () {
 
+    //ADMIN
+    Route::get("dashboard", [UserController::class, "admin"])->name("admin.dashboard");
+
     //USERS
     Route::get("users", [UserController::class, "index"])->name("users.index");
 

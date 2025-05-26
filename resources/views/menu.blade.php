@@ -10,14 +10,18 @@
             <button class="filter-button">Strength</button>
             <button class="filter-button">Caffeine</button>
             <button class="filter-button">Source</button>
-            <select id="categoryFilter">
+            <select id="categoryFilter" class = "form-control">
                 <option value="All">All Categories</option>
                 <option value="Tea">Tea</option>
                 <option value="Coffee">Coffee</option>
                 <option value="Snacks">Snacks</option>
                 <option value="Desserts">Desserts</option>
             </select>
+            <input class="form-control" type="text" placeholder="Search Menu...">
+
+
         </section>
+
 
         <!-- PRODUCT GRID -->
         <section class="products">

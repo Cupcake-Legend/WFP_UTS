@@ -20,6 +20,11 @@ class UserController extends Controller
         return view('users.index', compact('users'));
     }
 
+    public function admin()
+    {
+        return view("admin.index");
+    }
+
     /**
      * Show the form for creating a new resource.
      */

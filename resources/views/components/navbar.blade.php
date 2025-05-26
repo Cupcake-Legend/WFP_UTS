@@ -45,16 +45,17 @@
                 </form>
 
                 @if (auth()->user()->roles == 'admin')
-                    <a class="nav-btn" href = "{{ route('users.index') }}">User</a>
+                    <a class="nav-btn" href = "{{ route('admin.dashboard') }}">Admin</a>
                 @endif
             @endauth
 
 
 
 
-            <button class="nav-btn">Menu</button>
-            <button class="nav-btn">Reward</button>
+            <a class="nav-btn">Menu</a>
+            <a class="nav-btn">Reward</a>
+
+
         </div>
-        <input class="search-bar" type="text" placeholder="Search Menu...">
-    </div>
+
 </header>
