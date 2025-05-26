@@ -57,10 +57,10 @@ Route::middleware("auth")->group(function () {
 });
 
 // ROUTE KHUSUS ADMIN !! -cupcake legend
-Route::middleware(["auth", "role:admin"])->group(function () {
+Route::middleware(["auth", "role:admin"])->prefix("admin")->group(function () {
 
     //USERS
-    Route::get("/users/all", [UserController::class, "index"])->name("users.index");
+    Route::get("users", [UserController::class, "index"])->name("users.index");
 
     //CATEGORIES
     Route::resource("categories", CategoryController::class);
