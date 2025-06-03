@@ -32,9 +32,10 @@ Route::get("/", [MenuController::class, "index"])->name("index");
 Route::get('/info', function () {
     return view('information');
 });
-Route::get('/nutrition', function () {
-    return view('nutrition');
-});
+// Route::get('/nutrition', function () {
+//     return view('nutrition');
+// });
+Route::get('/nutrition', [MenuController::class, 'nutrition']);
 
 Route::get('/filter-category', [MenuController::class, 'filterCategory']);
 

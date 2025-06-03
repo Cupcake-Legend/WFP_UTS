@@ -17,6 +17,13 @@ class MenuController extends Controller
         return view("menu", compact("menus"));
     }
 
+    public function nutrition()
+    {
+        $categories = Category::with('menus')->get();
+        return view('nutrition', compact('categories'));
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
