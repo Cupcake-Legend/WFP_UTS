@@ -14,7 +14,7 @@
                     <p>Price: Rp. {{ number_format($menu->harga, 0, ',', '.') }}</p>
                     <p>Stock: {{ $menu->stock }}</p>
                     @if ($menu->image)
-                        <img src="{{ asset('storage/menu/' . $menu->image) }}" alt="{{ $menu->name }}" width="350">
+                        <img src="{{ asset('storage/menu/' . $menu->image) }}" title="{{ $menu->name }}" width="350">
                     @endif
                     <p>Porsi: {{ $menu->porsi }}</p>
                     <p>Nutrisi: {{ $menu->nutrisi }}</p>
