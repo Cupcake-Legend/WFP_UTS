@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Menu;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use Exception;
@@ -16,6 +18,8 @@ class OrderController extends Controller
     public function index()
     {
         //
+        $menus = Menu::all();
+        return view('order', compact('menus'));
     }
 
     /**

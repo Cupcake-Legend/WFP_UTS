@@ -1,7 +1,38 @@
 @extends('layouts.main')
 
 @section('content')
-    <div class="container">
+    <!-- <h1>Order Your Food</h1> -->
+
+    <div class="menu-list">
+        @if ($menus->isEmpty())
+            <p>No menu items available at the moment.</p>
+        @else
+            @foreach ($menus as $menu)
+                <div class="menu-item">
+                    <h2>{{ $menu->name }}</h2>
+                    <p>{{ $menu->deskripsi }}</p>
+                    <p>Price: Rp. {{ number_format($menu->harga, 0, ',', '.') }}</p>
+                    <p>Stock: {{ $menu->stock }}</p>
+                    @if ($menu->image)
+                        <img src="{{ asset('storage/menu/' . $menu->image) }}" alt="{{ $menu->name }}" width="350">
+                    @endif
+                    <p>Porsi: {{ $menu->porsi }}</p>
+                    <p>Nutrisi: {{ $menu->nutrisi }}</p>
+                    <p>Poin: {{ $menu->point }}</p>
+
+                    <form action="{{ route('orders.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="menu_id" value="{{ $menu->id }}">
+                        <label for="quantity_{{ $menu->id }}">Quantity:</label>
+                        <input type="number" id="quantity_{{ $menu->id }}" name="quantity" value="0" min="0" max="{{ $menu->stock }}">
+                        <button type="submit" @if($menu->stock == 0) disabled @endif>Add to Order</button>
+                    </form>
+                </div>
+                <hr>
+            @endforeach
+        @endif
+    </div>
+    <!-- <div class="container">
         <header>
             <div>
                 <button>Login</button>
@@ -57,5 +88,7 @@
                 <p>$6</p><small>Jasmine Green Tea</small>
             </div>
         </div>
+    </section> -->
+
     </section>
 @endsection
