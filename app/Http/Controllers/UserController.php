@@ -6,6 +6,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Category;
+use App\Models\Menu;
+use App\Models\Reward;
 
 class UserController extends Controller
 {
@@ -22,7 +25,11 @@ class UserController extends Controller
 
     public function admin()
     {
-        return view("admin.index");
+        $categories = Category::withCount('menus')->get();
+        $menus = Menu::with('category')->get();
+        $rewards = Reward::all();
+        
+        return view('admin.index', compact('categories', 'menus', 'rewards'));
     }
 
     /**
@@ -53,7 +60,14 @@ class UserController extends Controller
         if (Auth::attempt(["email" => $email, "password" => $password])) {
             $request->session()->regenerate();
 
-            return redirect()->intended(route("index"));
+            $user = Auth::user();
+
+            if ($user->roles === 'admin') {
+                return redirect()->route('admin.dashboard');
+            } else {
+                return redirect()->route('index');
+            }
+
         } else {
 
 
