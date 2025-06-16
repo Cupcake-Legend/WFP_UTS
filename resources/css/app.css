@@ -1,29 +1,34 @@
-@import url('https://fonts.googleapis.com/css?family=Lustria:700|Stoke:400');
+@import url("https://fonts.googleapis.com/css?family=Lustria:700|Stoke:400");
 /* sementara pallete theme entah kenapa gk sesuai kemauanku wkwkkwkk*/
 :root[data-theme="light"] {
-    --text: #0e1f00;
-    --background: #92f6c6;
-    --primary: #53c68e;
-    --secondary: #67f2fe;
-    --accent: #4d8efe;
-  }
-  :root[data-theme="dark"] {
-    --text: #eeffe0;
-    --background: #096d3c;
-    --primary: #39ac75;
-    --secondary: #018c98;
-    --accent: #0142b2;
-  }  
+    --text: #2a2118; /* Dark brown for text */
+    --background: #f8f4e9; /* Warm cream background */
+    --primary: #c19a6b; /* Warm wood/brown tone */
+    --secondary: #e8d5b5; /* Lighter complementary brown */
+    --accent: #8b0000; /* Deep red for accents */
+}
+
+:root[data-theme="dark"] {
+    --text: #f0e6d2; /* Creamy text */
+    --background: #1a120b; /* Very dark brown */
+    --primary: #3e2723; /* Dark wood tone */
+    --secondary: #5d4037; /* Medium brown */
+    --accent: #d32f2f; /* Vibrant red for accents */
+}
 
 body {
-    font-family: 'Stoke';
+    font-family: "Stoke";
     font-weight: 400;
     background-color: var(--background) !important;
     color: var(--text);
 }
 
-h1,h2,h3,h4,h5 {
-    font-family: 'Lustria';
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: "Lustria";
     font-weight: 700;
 }
 
@@ -32,7 +37,7 @@ html {
 }
 
 h1 {
-    font-size: 4.210rem;
+    font-size: 4.21rem;
 }
 
 h2 {
@@ -52,7 +57,7 @@ h5 {
 }
 
 small {
-    font-size: 0.750rem;
+    font-size: 0.75rem;
 }
 
 .container {
@@ -61,7 +66,11 @@ small {
     padding: 20px;
 }
 
-header,.filters,.products,.bestsellers,footer {
+header,
+.filters,
+.products,
+.bestsellers,
+footer {
     margin-bottom: 20px;
 }
 
@@ -93,7 +102,6 @@ header,.filters,.products,.bestsellers,footer {
 .nav-btn:hover {
     background-color: var(--text);
 }
-
 
 /* Filters */
 .filter-section {
@@ -130,7 +138,7 @@ header,.filters,.products,.bestsellers,footer {
     border-radius: 10px;
     padding: 10px;
     text-align: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .product .image {
