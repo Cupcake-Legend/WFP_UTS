@@ -82,45 +82,46 @@
                 </div>
             </div>
         </section>
-    @endsection
+    </div>
+@endsection
 
-    @section('scripts')
-        <script>
-            $(document).ready(function() {
-                $('#menuModal').on('show.bs.modal', function(event) {
-                    var button = $(event.relatedTarget);
-                    var menuId = button.data('id');
-                    var menuName = button.data('name');
-                    var menuPrice = button.data('price');
-                    var menuDescription = button.data('description');
-                    var menuImage = button.data('image');
-                    var menuNutrition = button.data('nutrition');
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#menuModal').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget);
+                var menuId = button.data('id');
+                var menuName = button.data('name');
+                var menuPrice = button.data('price');
+                var menuDescription = button.data('description');
+                var menuImage = button.data('image');
+                var menuNutrition = button.data('nutrition');
 
-                    var modal = $(this);
-                    modal.find('#modal-name').text(menuName);
-                    modal.find('#modal-price').text('Rp ' + menuPrice);
-                    modal.find('#modal-description').text(menuDescription);
-                    modal.find('#modal-image').attr('src', menuImage);
-                    modal.find('#modal-nutrition').text(menuNutrition);
-                });
+                var modal = $(this);
+                modal.find('#modal-name').text(menuName);
+                modal.find('#modal-price').text('Rp ' + menuPrice);
+                modal.find('#modal-description').text(menuDescription);
+                modal.find('#modal-image').attr('src', menuImage);
+                modal.find('#modal-nutrition').text(menuNutrition);
+            });
 
-                $('#categoryFilter').on('change', function() {
-                    var selectedCategory = $(this).val();
+            $('#categoryFilter').on('change', function() {
+                var selectedCategory = $(this).val();
 
-                    $.ajax({
-                        url: '/filter-category',
-                        method: 'GET',
-                        data: {
-                            category: selectedCategory
-                        },
-                        success: function(response) {
-                            $('.products').html(response.html);
-                        },
-                        error: function() {
-                            alert('Gagal memuat data menu.');
-                        }
-                    });
+                $.ajax({
+                    url: '/filter-category',
+                    method: 'GET',
+                    data: {
+                        category: selectedCategory
+                    },
+                    success: function(response) {
+                        $('.products').html(response.html);
+                    },
+                    error: function() {
+                        alert('Gagal memuat data menu.');
+                    }
                 });
             });
-        </script>
-    @endsection
+        });
+    </script>
+@endsection
