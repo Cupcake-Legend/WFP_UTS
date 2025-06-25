@@ -38,6 +38,8 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->deskripsi = $request->deskripsi;
         $category->save();
+
+        return redirect()->route('admin.dashboard')->with('Message', 'Category '.$category->name.' has been added');
     }
 
     /**
@@ -63,6 +65,8 @@ class CategoryController extends Controller
     {
         $category->name = $request->name;
         $category->deskripsi = $request->deskripsi;
+
+        return view('admin.index', compact('categories', 'menus', 'rewards'));
     }
 
     /**
@@ -70,6 +74,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        $category->name;
+        $category->deskripsi;
         $category->delete();
+
+        return redirect()->route('admin.dashboard')->with('Message', 'Category '.$category->name.' has been deleted');
     }
 }

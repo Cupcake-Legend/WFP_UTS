@@ -4,8 +4,7 @@
             @guest
                 <a class="nav-btn" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
 
-
-                <div class="modal" id = "loginModal" tabindex="-1">
+                <div class="modal" id="loginModal" tabindex="-1">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -36,6 +35,9 @@
                         </div>
                     </div>
                 </div>
+
+                <a class="nav-btn">Menu</a>
+                <a class="nav-btn">Reward</a>
             @endguest
 
             @auth
@@ -45,17 +47,22 @@
                 </form>
 
                 @if (auth()->user()->roles == 'admin')
-                    <a class="nav-btn" href = "{{ route('admin.dashboard') }}">Admin</a>
+                    <a class="nav-btn" href="{{ route('admin.dashboard') }}">Admin</a>
+                @else
+                    <a class="nav-btn">Menu</a>
+                    <a class="nav-btn">Reward</a>
                 @endif
             @endauth
-
-
-
-
-            <a class="nav-btn">Menu</a>
-            <a class="nav-btn">Reward</a>
-
-
+            
         </div>
 
+        <!-- Welcome message -->
+        @auth
+            @if (auth()->user()->roles == 'admin')
+                <div class="text-end me-3">
+                    <span class="fw-bold">Welcome, {{ auth()->user()->name }}</span>
+                </div>
+            @endif
+        @endauth
+    </div>
 </header>

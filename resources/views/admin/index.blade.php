@@ -242,7 +242,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="menuPortion" class="form-label">Portion</label>
-                                <input type="text" class="form-control" id="menuPortion" name="porsi">
+                                <input type="text" class="form-control" id="menuPortion" name="porsi" placeholder="Small, Medium or Large">
                             </div>
                             <div class="mb-3">
                                 <label for="menuImage" class="form-label">Image</label>

@@ -37,26 +37,37 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $request->validate([
-            "name" => "required|string",
-            "deskripsi" => "required|string",
-            "harga" => "required|integer",
-            "nutrisi" => "required|string",
-            "stock" => "required|integer",
-            "poin" => "required|integer",
-            "porsi" => "required|in:Small,Medium,Large",
-        ]);
+        "name" => "required|string",
+        "deskripsi" => "required|string",
+        "harga" => "required|integer",
+        "nutrisi" => "required|string",
+        "stock" => "required|integer",
+        "poin" => "required|integer",
+        "porsi" => "required|in:Small,Medium,Large",
+        "category_id" => "required|exists:categories,id",
+        "image" => "nullable|image|max:2048",
+    ]);
 
-        $menu = new Menu();
-        $menu->name = $request->name;
-        $menu->deskripsi = $request->deskripsi;
-        $menu->harga = $request->harga;
-        $menu->nutrisi = $request->nutrisi;
-        $menu->stock = $request->stock;
-        $menu->poin = $request->poin;
-        $menu->porsi = $request->porsi;
-        $menu->save();
+    $menu = new Menu();
+
+    $menu->name = $request->name;
+    $menu->deskripsi = $request->deskripsi;
+    $menu->harga = $request->harga;
+    $menu->nutrisi = $request->nutrisi;
+    $menu->stock = $request->stock;
+    $menu->poin = $request->poin;
+    $menu->porsi = $request->porsi;
+    $menu->category_id = $request->category_id;
+
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('menu_images', 'public');
+        $menu->image = $imagePath;
+    }
+
+    $menu->save();
+
+    return redirect()->route('admin.dashboard')->with('Message', 'Menu '.$menu->name.' has been added');
     }
 
     /**

@@ -40,7 +40,8 @@ class RewardController extends Controller
         $reward->menu_id = $request->menu_id;
 
         $reward->save();
-        //
+        
+        return redirect()->route('admin.dashboard')->with('Message', 'Reward '.$reward->name.' has been added');
     }
 
     /**
@@ -76,6 +77,9 @@ class RewardController extends Controller
      */
     public function destroy(Reward $reward)
     {
+        $reward->name;
         $reward->delete();
+
+        return redirect()->route('admin.dashboard')->with('Message', 'Reward '.$reward->name.' has been deleted');
     }
 }
