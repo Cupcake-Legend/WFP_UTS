@@ -65,8 +65,9 @@ class CategoryController extends Controller
     {
         $category->name = $request->name;
         $category->deskripsi = $request->deskripsi;
+        $category->save();
 
-        return view('admin.index', compact('categories', 'menus', 'rewards'));
+        return redirect()->route('admin.dashboard')->with('Message', 'Category '.$category->name.' has been updated');
     }
 
     /**

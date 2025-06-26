@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Menu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class MenuController extends Controller
 {
@@ -38,37 +40,50 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-        "name" => "required|string",
-        "deskripsi" => "required|string",
-        "harga" => "required|integer",
-        "nutrisi" => "required|string",
-        "stock" => "required|integer",
-        "poin" => "required|integer",
-        "porsi" => "required|in:Small,Medium,Large",
-        "category_id" => "required|exists:categories,id",
-        "image" => "nullable|image|max:2048",
-    ]);
+            "name" => "required|string",
+            "deskripsi" => "required|string",
+            "harga" => "required|integer",
+            "nutrisi" => "required|string",
+            "stock" => "required|integer",
+            "point" => "required|integer",
+            "porsi" => "required|in:Small,Medium,Large",
+            "category_id" => "required|exists:categories,id",
+            "image" => "nullable|image|max:2048",
+        ]);
 
-    $menu = new Menu();
+        $menu = new Menu();
 
-    $menu->name = $request->name;
-    $menu->deskripsi = $request->deskripsi;
-    $menu->harga = $request->harga;
-    $menu->nutrisi = $request->nutrisi;
-    $menu->stock = $request->stock;
-    $menu->poin = $request->poin;
-    $menu->porsi = $request->porsi;
-    $menu->category_id = $request->category_id;
+        $menu->name = $request->name;
+        $menu->deskripsi = $request->deskripsi;
+        $menu->harga = $request->harga;
+        $menu->nutrisi = $request->nutrisi;
+        $menu->stock = $request->stock;
+        $menu->point = $request->point;
+        $menu->porsi = $request->porsi;
+        $menu->category_id = $request->category_id;
 
-    if ($request->hasFile('image')) {
-        $imagePath = $request->file('image')->store('menu_images', 'public');
-        $menu->image = $imagePath;
+        $menu->image = 'default.jpg';
+        $menu->save();
+
+        // Upload image jika ada
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $ext = $file->getClientOriginalExtension();
+            $filename = $menu->id . '.' . $ext;
+
+            $path = public_path('images/menus');
+            if (!File::exists($path)) {
+                File::makeDirectory($path, 0755, true);
+            }
+
+            $file->move($path, $filename);
+            $menu->image = $filename;
+            $menu->save(); 
+        }
+
+        return redirect()->route('admin.dashboard')->with('Message', 'Menu '.$menu->name.' has been added');
     }
 
-    $menu->save();
-
-    return redirect()->route('admin.dashboard')->with('Message', 'Menu '.$menu->name.' has been added');
-    }
 
     /**
      * Display the specified resource.
@@ -88,22 +103,64 @@ class MenuController extends Controller
      */
     public function update(Request $request, Menu $menu)
     {
+        $request->validate([
+            "name" => "required|string",
+            "deskripsi" => "required|string",
+            "harga" => "required|integer",
+            "nutrisi" => "required|string",
+            "stock" => "required|integer",
+            "point" => "required|integer",
+            "porsi" => "required|in:Small,Medium,Large",
+            "category_id" => "required|exists:categories,id",
+            "image" => "nullable|image|max:2048",
+        ]);
+
         $menu->name = $request->name;
         $menu->deskripsi = $request->deskripsi;
         $menu->harga = $request->harga;
         $menu->nutrisi = $request->nutrisi;
         $menu->stock = $request->stock;
-        $menu->poin = $request->poin;
+        $menu->point = $request->point;
         $menu->porsi = $request->porsi;
+        $menu->category_id = $request->category_id;
+
+        if ($request->hasFile('image')) {
+            // Hapus file lama jika ada
+            $oldImagePath = public_path('images/menus/' . $menu->image);
+            if ($menu->image && File::exists($oldImagePath)) {
+                File::delete($oldImagePath);
+            }
+
+            $file = $request->file('image');
+            $ext = $file->getClientOriginalExtension();
+            $filename = $menu->id . '.' . $ext;
+            $file->move(public_path('images/menus'), $filename);
+            $menu->image = $filename;
+        }
+
         $menu->save();
+
+        return redirect()->route('admin.dashboard')->with('Message', 'Menu '.$menu->name.' has been updated');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Menu $menu)
     {
+        $menu->name;
+        $menu->deskripsi;
+        $menu->harga;
+        $menu->nutrisi;
+        $menu->stock;
+        $menu->point;
+        $menu->porsi;
+        $menu->category_id;
+
         $menu->delete();
+
+        return redirect()->route('admin.dashboard')->with('Message', 'Menu '.$menu->name.' has been deleted');
     }
 
     public function filterCategory(Request $request)
