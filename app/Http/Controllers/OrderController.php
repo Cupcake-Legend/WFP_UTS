@@ -61,11 +61,14 @@ class OrderController extends Controller
                 OrderDetail::create([
                     'order_id' => $order->id,
                     'menu_id' => $orderDetail['menu_id'],
+                    'quantity' => $orderDetail['quantity'],
                     'notes' => $orderDetail['notes'] ?? '',
                 ]);
             }
 
             DB::commit();
+            $request->session()->forget('cart');
+            return redirect()->route("index");
         } catch (Exception $ex) {
             DB::rollBack();
         }

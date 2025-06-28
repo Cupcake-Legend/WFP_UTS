@@ -14,6 +14,7 @@ class OrderDetail extends Model
         "order_id",
         "menu_id",
         "notes",
+        "quantity"
     ];
 
     public function order(): BelongsTo

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrderController;
@@ -94,6 +95,12 @@ Route::middleware(["auth", "role:user"])->group(function () {
     Route::resource("orders", OrderController::class);
 
     Route::resource("orderDetails", OrderDetailController::class);
+
+    Route::post('/cart/add/{menu}', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::get('/checkout', [CartController::class, 'showCheckout'])->name('checkout');
+    Route::post('/cart/update', [CartController::class, 'updateCart'])->name('update.cart');
+    Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+
 
 
     Route::get('/order', function () {
