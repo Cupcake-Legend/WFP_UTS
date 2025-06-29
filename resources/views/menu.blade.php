@@ -89,8 +89,8 @@
                         </div>
                         <h4 id="modal-name" class="mb-3"></h4>
                         <div class="d-flex justify-content-between mb-3">
-                            <span class="badge bg-success fs-6" id="modal-price"></span>
-                            <span class="badge bg-info text-dark fs-6" id="modal-nutrition"></span>
+                            <span class="badge text-dark fs-6" id="modal-price"></span>
+                            <span class="badge text-dark fs-6" id="modal-nutrition"></span>
                         </div>
                         <p class="text-muted" id="modal-description"></p>
                     </div>
@@ -106,7 +106,7 @@
                                 </button>
                             </form>
                         @else
-                            <a href="{{ route('login') }}" class="btn btn-primary">Login to Order</a>
+                            <a href="#" class="btn btn-primary">Login to Order</a>
                         @endauth
                     </div>
                 </div>
@@ -166,6 +166,7 @@
                 modal.find('#modal-description').text(menuDescription);
                 modal.find('#modal-image').attr('src', menuImage);
                 modal.find('#modal-nutrition').text(menuNutrition);
+
 
                 var form = modal.find('#add-to-cart-form');
                 if (form.length) {
