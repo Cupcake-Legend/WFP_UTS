@@ -46,7 +46,6 @@ class MenuController extends Controller
             "nutrisi" => "required|string",
             "stock" => "required|integer",
             "point" => "required|integer",
-            "porsi" => "required|in:Small,Medium,Large",
             "category_id" => "required|exists:categories,id",
             "image" => "nullable|image|max:2048",
         ]);
@@ -57,7 +56,6 @@ class MenuController extends Controller
         $menu->deskripsi = $request->deskripsi;
         $menu->harga = $request->harga;
         $menu->nutrisi = $request->nutrisi;
-        $menu->stock = $request->stock;
         $menu->point = $request->point;
         $menu->porsi = $request->porsi;
         $menu->category_id = $request->category_id;
@@ -110,7 +108,6 @@ class MenuController extends Controller
             "nutrisi" => "required|string",
             "stock" => "required|integer",
             "point" => "required|integer",
-            "porsi" => "required|in:Small,Medium,Large",
             "category_id" => "required|exists:categories,id",
             "image" => "nullable|image|max:2048",
         ]);
@@ -121,7 +118,6 @@ class MenuController extends Controller
         $menu->nutrisi = $request->nutrisi;
         $menu->stock = $request->stock;
         $menu->point = $request->point;
-        $menu->porsi = $request->porsi;
         $menu->category_id = $request->category_id;
 
         if ($request->hasFile('image')) {

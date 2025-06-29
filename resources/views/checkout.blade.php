@@ -55,20 +55,29 @@
                         @php $total = 0; @endphp
                         @foreach ($menus as $index => $menu)
                             @php
-                                $subtotal = $menu->harga * $menu->quantity;
+                                $porsi = session('cart')[$menu->id]['porsi'] ?? 'Medium';
+                                $multiplier = match ($porsi) {
+                                    'Small' => 0.9,
+                                    'Large' => 1.2,
+                                    default => 1.0,
+                                };
+                                $subtotal = $menu->harga * $menu->quantity * $multiplier;
                                 $total += $subtotal;
                             @endphp
                             <tr>
                                 <td>{{ $menu->name }}</td>
-                                <td>Rp{{ number_format($menu->harga, 0, ',', '.') }}</td>
+                                <td class = "menu-price" data-price={{ $menu->harga }}>
+                                    Rp{{ number_format($menu->harga, 0, ',', '.') }}</td>
                                 <td>
                                     <input type="number" name="order_details[{{ $index }}][quantity]"
-                                        value="{{ $menu->quantity }}" min="1" class="form-control" required>
+                                        value="{{ $menu->quantity }}" min="1" class="form-control quantity-input"
+                                        required>
                                     <input type="hidden" name="order_details[{{ $index }}][menu_id]"
                                         value="{{ $menu->id }}">
                                 </td>
                                 <td>
-                                    <select name="order_details[{{ $index }}][porsi]" class="form-select" required>
+                                    <select name="order_details[{{ $index }}][porsi]"
+                                        class="form-select porsi-select" required>
                                         @foreach (['Small', 'Medium', 'Large'] as $size)
                                             <option value="{{ $size }}"
                                                 {{ (session('cart')[$menu->id]['porsi'] ?? 'Medium') === $size ? 'selected' : '' }}>
@@ -82,7 +91,7 @@
                                         class="form-control" placeholder="Optional">
                                 </td>
 
-                                <td>Rp{{ number_format($subtotal, 0, ',', '.') }}</td>
+                                <td class = "menu-subtotal">Rp{{ number_format($subtotal, 0, ',', '.') }}</td>
                                 <td>
                                     <button type="button" class="btn btn-sm btn-danger"
                                         onclick="removeFromCart({{ $menu->id }}, this)">
@@ -95,7 +104,9 @@
                         <tr>
                             <td colspan="5" class="text-end fw-bold">Total</td>
                             <td>
-                                Rp{{ number_format($total, 0, ',', '.') }}
+                                <span class = "grand-total">
+                                    Rp{{ number_format($total, 0, ',', '.') }}
+                                </span>
                                 <input type="hidden" name="total" value="{{ $total }}">
                             </td>
                         </tr>
@@ -117,16 +128,30 @@
         function updateCart() {
             let quantities = {};
             let porsis = {};
+            let grandTotal = 0;
 
             $(".quantity-input").each(function() {
+                let row = $(this).closest("tr");
                 let menuId = $(this).data("id");
-                quantities[menuId] = $(this).val();
+                let quantity = parseInt($(this).val());
+                let price = parseFloat(row.find(".menu-price").data("price"));
+                let porsi = row.find(".porsi-select").val();
+
+                let multiplier = 1.0;
+                if (porsi === "Small") multiplier = 0.9;
+                else if (porsi === "Large") multiplier = 1.2;
+
+                let subtotal = quantity * price * multiplier;
+                row.find(".menu-subtotal").text("Rp" + subtotal.toLocaleString("id-ID"));
+
+                grandTotal += subtotal;
+
+                quantities[menuId] = quantity;
+                porsis[menuId] = porsi;
             });
 
-            $(".porsi-select").each(function() {
-                let menuId = $(this).data("id");
-                porsis[menuId] = $(this).val();
-            });
+            $(".grand-total").text("Rp" + grandTotal.toLocaleString("id-ID"));
+            $("input[name=total]").val(grandTotal);
 
             $.ajax({
                 url: "{{ route('update.cart') }}",
@@ -137,14 +162,14 @@
                     porsis: porsis
                 },
                 success: function(response) {
-                    console.log('Cart updated successfully');
-                    location.reload();
+                    console.log("Cart updated successfully");
                 },
                 error: function() {
-                    console.error('Cart update failed');
+                    console.error("Cart update failed");
                 }
             });
         }
+
 
         function removeFromCart(menuId, button) {
             if (!confirm('Remove this item from cart?')) return;

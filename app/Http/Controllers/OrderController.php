@@ -62,6 +62,7 @@ class OrderController extends Controller
                     'order_id' => $order->id,
                     'menu_id' => $orderDetail['menu_id'],
                     'quantity' => $orderDetail['quantity'],
+                    'porsi' => $orderDetail['porsi'],
                     'notes' => $orderDetail['notes'] ?? '',
                 ]);
             }
