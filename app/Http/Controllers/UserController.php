@@ -28,7 +28,7 @@ class UserController extends Controller
         $categories = Category::withCount('menus')->get();
         $menus = Menu::with('category')->get();
         $rewards = Reward::all();
-        
+
         return view('admin.index', compact('categories', 'menus', 'rewards'));
     }
 
@@ -67,7 +67,6 @@ class UserController extends Controller
             } else {
                 return redirect()->route('index');
             }
-
         } else {
 
 
@@ -90,6 +89,16 @@ class UserController extends Controller
     public function loginView()
     {
         return view("auth.login");
+    }
+
+    public function profile()
+    {
+        $user = User::with([
+            'orders',
+            'rewards.reward'
+        ])->findOrFail(Auth::id());
+
+        return view('profile', compact('user'));
     }
 
 
@@ -135,6 +144,13 @@ class UserController extends Controller
         return view('users.edit', compact('user'));
     }
 
+    public function editProfile()
+    {
+        // Langsung ambil user yang sedang login, tidak perlu $id dari URL
+        $user = Auth::user();
+        return view('profile.edit', compact('user'));
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -164,8 +180,8 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->route('users.index')->with("success", "User Updated!");
-
+        // return redirect()->route('users.index')->with("success", "User Updated!");
+        return redirect()->route('profile')->with("success", "Profil berhasil diperbarui!");
 
 
 

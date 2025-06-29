@@ -23,6 +23,8 @@
                     <a class="nav-btn" href="{{ route('admin.dashboard') }}">Admin</a>
                 @endif
 
+                <a class="nav-btn" href="{{ route('profile') }}">Profile</a>
+
                 <form method="POST" action="{{ route('logout') }}" class="m-0">
                     @csrf
                     <button type="submit" class="nav-btn">Logout</button>

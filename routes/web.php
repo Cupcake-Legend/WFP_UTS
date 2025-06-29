@@ -101,7 +101,10 @@ Route::middleware(["auth", "role:user"])->group(function () {
     Route::post('/cart/update', [CartController::class, 'updateCart'])->name('update.cart');
     Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
 
+    Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
+    Route::put('/profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
 
     Route::get('/order', function () {
         return view('order');

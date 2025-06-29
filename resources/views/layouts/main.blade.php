@@ -36,10 +36,43 @@
         @yield('content')
     </div>
 
+
+    @if (session('success'))
+        <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1080">
+            <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header bg-success text-white">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    <strong class="me-auto">Sukses</strong>
+                    <small>Baru saja</small>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {{ session('success') }}
+                </div>
+            </div>
+        </div>
+    @endif
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
+    @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const successToastEl = document.getElementById('successToast');
+                const successToast = new bootstrap.Toast(successToastEl);
+                successToast.show();
+            });
+        </script>
+    @endif
 </body>
+
+@yield('scripts')
+
+</html>
 
 @yield('scripts')
 
