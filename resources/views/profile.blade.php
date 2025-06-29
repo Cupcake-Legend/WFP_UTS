@@ -3,16 +3,13 @@
 @section('content')
     <div class="container py-5">
 
-        {{-- Judul Halaman --}}
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="fw-light">Profil Saya</h1>
         </div>
 
         <div class="row">
-            {{-- KOLOM KIRI: Untuk Informasi Utama --}}
             <div class="col-lg-4">
 
-                {{-- Card Informasi Profil --}}
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body p-4">
                         <h5 class="card-title mb-3">{{ $user->name }}</h5>
@@ -29,7 +26,6 @@
                     </div>
                 </div>
 
-                {{-- Card Poin --}}
                 <div class="card border-0 shadow-sm text-center mb-4">
                     <div class="card-body p-4">
                         <h6 class="text-muted mb-2">Poin Reward Anda</h6>
@@ -39,37 +35,66 @@
 
             </div>
 
-            {{-- KOLOM KANAN: Untuk Riwayat --}}
             <div class="col-lg-8">
 
-                {{-- Card Riwayat Order --}}
+
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body p-4">
                         <h5 class="card-title mb-3">Riwayat Order</h5>
-                        @if ($user->orders->count())
-                            <ul class="list-group list-group-flush">
-                                @foreach ($user->orders as $order)
-                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                        <div>
-                                            <strong>Order #{{ $order->id }}</strong>
-                                            <small class="d-block text-muted">
-                                                @if ($order->created_at)
-                                                    {{ $order->created_at->format('d M Y, H:i') }}
-                                                @endif
-                                            </small>
+
+                        <div class="accordion accordion-flush" id="orderHistoryAccordion">
+                            @forelse($user->orders as $order)
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOrder{{ $order->id }}">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseOrder{{ $order->id }}" aria-expanded="false"
+                                            aria-controls="collapseOrder{{ $order->id }}">
+                                            <div class="d-flex justify-content-between w-100">
+                                                <div>
+                                                    <strong>Order #{{ $order->id }}</strong>
+                                                    <small
+                                                        class="d-block text-muted">{{ $order->created_at?->format('d M Y, H:i') }}</small>
+                                                </div>
+                                                <span
+                                                    class="badge bg-primary rounded-pill align-self-center me-3">Rp{{ number_format($order->total ?? 0) }}</span>
+                                            </div>
+                                        </button>
+                                    </h2>
+
+                                    <div id="collapseOrder{{ $order->id }}" class="accordion-collapse collapse"
+                                        aria-labelledby="headingOrder{{ $order->id }}"
+                                        data-bs-parent="#orderHistoryAccordion">
+                                        <div class="accordion-body">
+                                            <h6 class="mb-3">Detail Pesanan:</h6>
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Menu</th>
+                                                        <th class="text-center">Jumlah</th>
+                                                        <th class="text-end">Harga</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($order->orderDetails as $detail)
+                                                        <tr>
+                                                            <td>{{ $detail->menu->name ?? 'Menu Dihapus' }}</td>
+                                                            <td class="text-center">{{ $detail->quantity }}</td>
+                                                            <td class="text-end">
+                                                                Rp{{ number_format($detail->menu->harga ?? 0) }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
                                         </div>
-                                        <span
-                                            class="badge bg-primary rounded-pill">Rp{{ number_format($order->total ?? 0) }}</span>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @else
-                            <p class="text-muted">Anda belum memiliki riwayat order.</p>
-                        @endif
+                                    </div>
+                                </div>
+                            @empty
+                                <p class="text-muted">Anda belum memiliki riwayat order.</p>
+                            @endforelse
+                        </div>
                     </div>
                 </div>
 
-                {{-- Card Riwayat Reward --}}
                 <div class="card border-0 shadow-sm">
                     <div class="card-body p-4">
                         <h5 class="card-title mb-3">Reward yang Dimiliki</h5>
