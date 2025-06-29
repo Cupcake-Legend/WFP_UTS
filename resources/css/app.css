@@ -194,3 +194,20 @@ footer ul {
 footer li {
     margin-bottom: 5px;
 }
+
+.scrollable-products {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 10px;
+    -webkit-overflow-scrolling: touch; 
+}
+
+.scrollable-products::-webkit-scrollbar {
+    height: 8px;
+}
+
+.scrollable-products::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
