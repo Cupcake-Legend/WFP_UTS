@@ -5,10 +5,6 @@
     <div class="container py-5">
         <h2 class="mb-4">Checkout</h2>
 
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-
         @if (count($menus) === 0)
             <p>Your cart is empty.</p>
         @else

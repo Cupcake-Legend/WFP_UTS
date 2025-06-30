@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Menu;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,70 +36,61 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'user_id' => 'required|exists:users,id',
-        //     'payment_method_id' => 'required|exists:payment_methods,id',
-        //     'total' => 'required|integer',
-        //     'status' => 'required|in:PROCESS,DONE',
-        //     'order_method' => 'required|in:DINEIN,TAKEAWAY',
-        //     'order_details' => 'required|array',
-        //     'order_details.*.menu_id' => 'required|exists:menus,id',
-        //     'order_details.*.notes' => 'nullable|string',
-        // ]);
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'payment_method_id' => 'required|exists:payment_methods,id',
+            'total' => 'required|integer',
+            'status' => 'required|in:PROCESS,DONE',
+            'order_method' => 'required|in:DINEIN,TAKEAWAY',
+            'order_details' => 'required|array',
+            'order_details.*.menu_id' => 'required|exists:menus,id',
+            'order_details.*.quantity' => 'required|integer|min:1',
+            'order_details.*.porsi' => 'required|in:Small,Medium,Large',
+            'order_details.*.notes' => 'nullable|string',
+        ]);
 
-        // DB::beginTransaction();
+        DB::beginTransaction();
 
-        // try {
-        //     $order = Order::create([
-        //         'user_id' => $request->user_id,
-        //         'payment_method_id' => $request->payment_method_id,
-        //         'total' => $request->total,
-        //         'status' => $request->status,
-        //         'order_method' => $request->order_method,
-        //     ]);
+        try {
+            $order = Order::create([
+                'user_id' => $request->user_id,
+                'payment_method_id' => $request->payment_method_id,
+                'total' => $request->total,
+                'status' => $request->status,
+                'order_method' => $request->order_method,
+            ]);
 
-        //     foreach ($request->order_details as $orderDetail) {
-        //         OrderDetail::create([
-        //             'order_id' => $order->id,
-        //             'menu_id' => $orderDetail['menu_id'],
-        //             'quantity' => $orderDetail['quantity'],
-        //             'porsi' => $orderDetail['porsi'],
-        //             'notes' => $orderDetail['notes'] ?? '',
-        //         ]);
-        //     }
+            foreach ($request->order_details as $orderDetail) {
+                OrderDetail::create([
+                    'order_id' => $order->id,
+                    'menu_id' => $orderDetail['menu_id'],
+                    'quantity' => $orderDetail['quantity'],
+                    'porsi' => $orderDetail['porsi'],
+                    'notes' => $orderDetail['notes'] ?? '',
+                ]);
+            }
 
-        //     DB::commit();
-        //     $request->session()->forget('cart');
-        //     // return redirect()->route("index");
-        //     return redirect()->route("orders.show", $order->id)->with('success', 'Order placed successfully!');
-        // } catch (Exception $ex) {
-        //     DB::rollBack();
-        //     return back()->withErrors(['error' => 'Order failed. Please try again.']);
-        // }
+            $points = ($request->total / 1000);
+
+            $user = User::findOrFail($request->user_id);
+            $user->poin += $points;
+            $user->save();
+
+
+            DB::commit();
+            $request->session()->forget('cart');
+            // return redirect()->route("index");
+            return view('order', [
+                'order' => $order->load('orderDetails.menu', 'paymentMethod')
+            ]);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return back()->withErrors(['error' => 'Order failed. Please try again.']);
+        }
         // dd('store dipanggil');
         // dd($request->all());
-        $order = Order::create([
-            'user_id' => $request->user_id,
-            'payment_method_id' => $request->payment_method_id,
-            'total' => $request->total,
-            'status' => $request->status,
-            'order_method' => $request->order_method,
-        ]);
 
-        foreach ($request->order_details as $orderDetail) {
-            OrderDetail::create([
-                'order_id' => $order->id,
-                'menu_id' => $orderDetail['menu_id'],
-                'quantity' => $orderDetail['quantity'],
-                'porsi' => $orderDetail['porsi'],
-                'notes' => $orderDetail['notes'] ?? '',
-            ]);
-        }
 
-        $request->session()->forget('cart');
-        return view('order', [
-            'order' => $order->load('orderDetails.menu', 'paymentMethod')
-        ]);
     }
 
     /**
