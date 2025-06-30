@@ -21,10 +21,11 @@
             @auth
                 @if (auth()->user()->roles === 'admin')
                     <a class="nav-btn" href="{{ route('admin.dashboard') }}">Admin</a>
+                    <a class="nav-btn" href="{{ route('reports.index') }}">Reports</a>
                 @endif
-
-                <a class="nav-btn" href="{{ route('profile') }}">Profile</a>
-
+                @if (auth()->user()->roles === 'user')
+                    <a class="nav-btn" href="{{ route('profile') }}">Profile</a>
+                @endif
                 <form method="POST" action="{{ route('logout') }}" class="m-0">
                     @csrf
                     <button type="submit" class="nav-btn">Logout</button>
