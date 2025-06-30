@@ -61,6 +61,12 @@ class OrderController extends Controller
             ]);
 
             foreach ($request->order_details as $orderDetail) {
+                $menu = Menu::findOrFail($orderDetail["menu_id"]);
+
+                if ($menu->stock < $orderDetail['quantity']) {
+                    throw new Exception("Stok untuk {$menu->name} tidak mencukupi.");
+                }
+
                 OrderDetail::create([
                     'order_id' => $order->id,
                     'menu_id' => $orderDetail['menu_id'],
@@ -68,6 +74,8 @@ class OrderController extends Controller
                     'porsi' => $orderDetail['porsi'],
                     'notes' => $orderDetail['notes'] ?? '',
                 ]);
+                $menu->stock -= $orderDetail['quantity'];
+                $menu->save();
             }
 
             $points = ($request->total / 1000);
