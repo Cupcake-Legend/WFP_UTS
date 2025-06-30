@@ -106,6 +106,8 @@ Route::middleware(["auth", "role:user"])->group(function () {
     Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
     Route::put('/profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
 
+
+    Route::post('/reward/claim/{rewardId}', [RewardController::class, "claimReward"])->name('reward.claim');
     // Route::get('/order', function () {
     //     return view('order');
     // });

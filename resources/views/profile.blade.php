@@ -117,8 +117,18 @@
                                                 @endif
                                             </small>
                                         </div>
-                                        <span class="badge bg-success rounded-pill">+{{ $rewardDetail->reward->poin }}
-                                            Poin</span>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span class="badge bg-success rounded-pill">+{{ $rewardDetail->reward->poin }}
+                                                Poin</span>
+
+                                            @if ($rewardDetail->is_claimed !== 'YES')
+                                                <form action="{{ route('reward.claim', $rewardDetail->reward->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn-primary">Claim</button>
+                                                </form>
+                                            @endif
+                                        </div>
                                     </li>
                                 @endif
                             @endforeach

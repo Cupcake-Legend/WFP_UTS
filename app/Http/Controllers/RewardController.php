@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reward;
+use App\Models\RewardDetail;
 use Illuminate\Http\Request;
 
 class RewardController extends Controller
@@ -40,8 +41,17 @@ class RewardController extends Controller
         $reward->menu_id = $request->menu_id;
 
         $reward->save();
-        
-        return redirect()->route('admin.dashboard')->with('Message', 'Reward '.$reward->name.' has been added');
+
+        return redirect()->route('admin.dashboard')->with('Message', 'Reward ' . $reward->name . ' has been added');
+    }
+
+    public function claimReward($rewardId)
+    {
+        RewardDetail::where('reward_id', $rewardId)
+            ->where('user_id', auth()->id())
+            ->update(['is_claimed' => 'YES']);
+
+        return redirect()->route("index");
     }
 
     /**
@@ -80,6 +90,6 @@ class RewardController extends Controller
         $reward->name;
         $reward->delete();
 
-        return redirect()->route('admin.dashboard')->with('Message', 'Reward '.$reward->name.' has been deleted');
+        return redirect()->route('admin.dashboard')->with('Message', 'Reward ' . $reward->name . ' has been deleted');
     }
 }
