@@ -17,22 +17,30 @@ class OrderDetailSeeder extends Seeder
             [
                 "order_id" => 1,
                 "menu_id" => 1,
-                "notes" => ""
+                "notes" => "",
+                "created_at" => now(),
+                "updated_at" => now()
             ],
             [
                 "order_id" => 1,
                 "menu_id" => 3,
-                "notes" => "No chili"
+                "notes" => "No chili",
+                "created_at" => now(),
+                "updated_at" => now()
             ],
             [
                 "order_id" => 2,
                 "menu_id" => 2,
-                "notes" => "No sugar"
+                "notes" => "No sugar",
+                "created_at" => now(),
+                "updated_at" => now()
             ],
             [
                 "order_id" => 2,
                 "menu_id" => 4,
-                "notes" => ""
+                "notes" => "",
+                "created_at" => now(),
+                "updated_at" => now()
             ],
 
         ]);

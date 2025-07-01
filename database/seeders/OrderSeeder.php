@@ -19,14 +19,18 @@ class OrderSeeder extends Seeder
                 "order_method" => "DINEIN",
                 "total" => 35000,
                 "user_id" => 2,
-                "payment_method_id" => "1"
+                "payment_method_id" => "1",
+                "created_at" => now(),
+                "updated_at" => now()
             ],
             [
                 "status" => "DONE",
                 "order_method" => "TAKEAWAY",
                 "total" => 40000,
                 "user_id" => 2,
-                "payment_method_id" => "2"
+                "payment_method_id" => "2",
+                "created_at" => now(),
+                "updated_at" => now()
             ]
         ]);
     }

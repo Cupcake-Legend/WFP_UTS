@@ -16,15 +16,21 @@ class NotificationSeeder extends Seeder
         DB::table("notifications")->insert([
             [
                 "isi" => "Order sedang diproses!",
-                "order_id" => 1
+                "order_id" => 1,
+                "created_at" => now(),
+                "updated_at" => now()
             ],
             [
                 "isi" => "Order sedang diproses!",
-                "order_id" => 2
+                "order_id" => 2,
+                "created_at" => now(),
+                "updated_at" => now()
             ],
             [
                 "isi" => "Order selesai!",
-                "order_id" => 2
+                "order_id" => 2,
+                "created_at" => now(),
+                "updated_at" => now()
             ],
         ]);
     }

@@ -16,12 +16,18 @@ class PaymentMethodSeeder extends Seeder
         DB::table("payment_methods")->insert([
             [
                 "name" => "DEBIT",
+                "created_at" => now(),
+                "updated_at" => now()
             ],
             [
                 "name" => "CREDIT",
+                "created_at" => now(),
+                "updated_at" => now()
             ],
             [
                 "name" => "CASH",
+                "created_at" => now(),
+                "updated_at" => now()
             ]
         ]);
     }

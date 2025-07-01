@@ -18,17 +18,23 @@ class RewardSeeder extends Seeder
             [
                 "name" => "Promo Lebron",
                 "poin" => 1000,
-                "menu_id" => 1
+                "menu_id" => 1,
+                "created_at" => now(),
+                "updated_at" => now()
             ],
             [
                 "name" => "Promo Mahasiswa",
                 "poin" => 2000,
-                "menu_id" => 2
+                "menu_id" => 2,
+                "created_at" => now(),
+                "updated_at" => now()
             ],
             [
                 "name" => "Promo Pekerja",
                 "poin" => 1500,
-                "menu_id" => 3
+                "menu_id" => 3,
+                "created_at" => now(),
+                "updated_at" => now()
             ],
 
         ]);

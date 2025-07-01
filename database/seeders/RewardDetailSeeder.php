@@ -17,17 +17,23 @@ class RewardDetailSeeder extends Seeder
             [
                 "reward_id" => 1,
                 "user_id" => 2,
-                "is_claimed" => "NO"
+                "is_claimed" => "NO",
+                "created_at" => now(),
+                "updated_at" => now()
             ],
             [
                 "reward_id" => 2,
                 "user_id" => 2,
-                "is_claimed" => "NO"
+                "is_claimed" => "NO",
+                "created_at" => now(),
+                "updated_at" => now()
             ],
             [
                 "reward_id" => 3,
                 "user_id" => 2,
-                "is_claimed" => "NO"
+                "is_claimed" => "NO",
+                "created_at" => now(),
+                "updated_at" => now()
             ],
         ]);
     }

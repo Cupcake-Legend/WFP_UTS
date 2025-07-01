@@ -24,6 +24,8 @@ class UserSeeder extends Seeder
                 "alamat" => "Jl Ubaya Surabaya",
                 "poin" => 0,
                 "roles" => "admin",
+                "created_at" => now(),
+                "updated_at" => now()
             ],
             [
                 "name" => "Nico",
@@ -33,6 +35,8 @@ class UserSeeder extends Seeder
                 "alamat" => "Jl Ubaya Tenggilis",
                 "poin" => 0,
                 "roles" => "user",
+                "created_at" => now(),
+                "updated_at" => now()
             ],
 
         ]);

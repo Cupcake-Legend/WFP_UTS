@@ -32,19 +32,20 @@
                 <div class="col-12 col-md-6 text-md-end">
                     <select id="categoryFilter" class="form-select w-100 w-md-50 d-inline-block">
                         <option value="All">All Categories</option>
-                        <option value="Tea">Tea</option>
-                        <option value="Coffee">Coffee</option>
                         <option value="Snacks">Snacks</option>
                         <option value="Desserts">Desserts</option>
+                        <option value="Sandwiches">Sandwiches</option>
+                        <option value="Breakfast">Breakfast</option>
+                        <option value="Beverages">Beverages</option>
                     </select>
                 </div>
             </div>
         </section>
-        
+
         <!-- Product Grid -->
         <section class="products-wrapper mb-5">
             @if ($menus->count() > 0)
-                <div class="scrollable-products d-flex gap-3">
+                <div class="scrollable-products products d-flex gap-3">
                     @foreach ($menus as $menu)
                         <div class="card h-100 shadow-sm" style="min-width: 250px; flex: 0 0 auto;">
                             <img src="{{ $menu->image ? asset('storage/' . $menu->image) : 'https://via.placeholder.com/300' }}"
