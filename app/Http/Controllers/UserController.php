@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Category;
 use App\Models\Menu;
+use App\Models\Order;
 use App\Models\Reward;
 
 class UserController extends Controller
@@ -28,8 +29,9 @@ class UserController extends Controller
         $categories = Category::withCount('menus')->get();
         $menus = Menu::with('category')->get();
         $rewards = Reward::all();
+        $orders = Order::all();
 
-        return view('admin.index', compact('categories', 'menus', 'rewards'));
+        return view('admin.index', compact('categories', 'menus', 'rewards', 'orders'));
     }
 
     /**

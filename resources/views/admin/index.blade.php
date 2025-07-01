@@ -19,6 +19,10 @@
                 <button class="nav-link" id="rewards-tab" data-bs-toggle="tab" data-bs-target="#rewards" type="button"
                     role="tab">Rewards</button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders" type="button"
+                    role="tab">Orders</button>
+            </li>
         </ul>
 
         <!-- Tab Content -->
@@ -400,6 +404,84 @@
                     </table>
                 </div>
             </div>
+
+            {{-- Orders Tab --}}
+            <div class="tab-pane fade" id="orders" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2>Orders</h2>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Status</th>
+                                <th>Total</th>
+                                <th>User</th>
+                                <th>Payment Method</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($orders as $order)
+                                <tr>
+                                    <td>{{ $order->id }}</td>
+                                    <td>{{ $order->status }}</td>
+                                    <td>{{ $order->total }}</td>
+                                    <td>{{ $order->user->name }}</td>
+                                    <td>{{ $order->paymentMethod->name }}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info" data-bs-toggle="modal"
+                                            data-bs-target="#editOrderModal{{ $order->id }}">
+                                            <i class="fas fa-edit"></i>Finish
+                                        </button>
+
+                                        @push('modals')
+                                            <div class="modal fade" id="editOrderModal{{ $order->id }}" tabindex="-1"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Edit Order Status - {{ $order->id }}
+                                                            </h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                        </div>
+                                                        <form action="{{ route('orders.finish') }}" method="POST">
+                                                            @csrf
+                                                            <div class="modal-body">
+                                                                <div class="mb-3 d-flex">
+                                                                    <label for="statusName" class="form-label">Status:
+                                                                    </label>
+                                                                    <div class = "mx-1">
+                                                                        <label for="">{{ $order->status }}</label>
+                                                                    </div>
+                                                                    <input name = "order_id" type="hidden"
+                                                                        value="{{ $order->id }}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary">Finish
+                                                                    Order</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endpush
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
         </div>
     </div>
 
