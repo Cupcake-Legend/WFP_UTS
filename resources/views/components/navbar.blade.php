@@ -16,6 +16,7 @@
         <div class="d-flex align-items-center gap-3">
             @guest
                 <a class="nav-btn" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                <a class="nav-btn" data-bs-toggle="modal" data-bs-target="#registerModal">Register</a>
             @endguest
 
             @auth
@@ -61,6 +62,58 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('registerAttempt') }}" method="POST">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="registerModal">Register</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label>Name</label>
+                            <input type="text" name="name" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>Email</label>
+                            <input type="email" name="email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>No HP</label>
+                            <input type="text" name="no_hp" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>Alamat</label>
+                            <input type="text" name="alamat" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-control" minlength="6" required>
+                        </div>
+                       <div class="mb-3">
+                            <label>Roles</label><br>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="roles" id="roleUser" value="user" required>
+                                <label class="form-check-label" for="roleUser">User</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="roles" id="roleAdmin" value="admin">
+                                <label class="form-check-label" for="roleAdmin">Admin</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Register</button>
                     </div>
                 </form>
             </div>

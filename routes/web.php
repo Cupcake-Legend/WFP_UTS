@@ -49,6 +49,7 @@ Route::resource("users", UserController::class)->except("create", "index");
 Route::middleware("guest")->group(function () {
 
     Route::get("/register", [UserController::class, "create"])->name("register");
+    Route::post('/register', [UserController::class, 'register'])->name('registerAttempt');
 
     Route::get("/login", [UserController::class, "loginView"])->name("login");
     Route::post("/login", [UserController::class, "login"])->name("loginAttempt");

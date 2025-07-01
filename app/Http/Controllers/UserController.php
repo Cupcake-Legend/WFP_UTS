@@ -11,6 +11,7 @@ use App\Models\Menu;
 use App\Models\Order;
 use App\Models\Reward;
 
+
 class UserController extends Controller
 {
     /**
@@ -44,6 +45,31 @@ class UserController extends Controller
 
         //
     }
+
+    public function register(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'no_hp' => 'required|string',
+            'alamat' => 'required|string',
+            'password' => 'required|string|min:6',
+            'roles' => 'required|in:admin,user',
+        ]);
+
+        User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'no_hp' => $validated['no_hp'],
+            'alamat' => $validated['alamat'],
+            'password' => Hash::make($validated['password']),
+            'roles' => $validated['roles'],
+            'poin' => 0,
+        ]);
+
+        return redirect()->route('index')->with("Message", "Account have been created");
+    }
+
 
     /**
      * Store a newly created resource in storage.

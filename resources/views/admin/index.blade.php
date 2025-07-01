@@ -145,7 +145,7 @@
                                     <td>{{ $menu->id }}</td>
                                     <td>
                                         @if ($menu->image)
-                                            <img style="max-height: 100px;"
+                                            <img style="height: 100px; width: 100px;"
                                                 src="{{ asset('images/menus/' . $menu->image) }}">
                                         @else
                                             <span class="text-muted">No image</span>
