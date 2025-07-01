@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reward;
 use App\Models\RewardDetail;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RewardDetailController extends Controller
 {
@@ -33,11 +36,28 @@ class RewardDetailController extends Controller
             'user_id' => 'required|exists:users,id',
         ]);
 
-        $rewardDetail = new RewardDetail();
+        $user = User::findOrFail($request->user_id);
+        $reward = Reward::findOrFail($request->reward_id);
 
-        $rewardDetail->reward_id = $request->reward_id;
-        $rewardDetail->user_id = $request->user_id;
-        $rewardDetail->save();
+        if ($user->poin >= $reward->poin) {
+
+            DB::beginTransaction();
+            $user->poin -= $reward->poin;
+            $user->save();
+
+            $rewardDetail = new RewardDetail();
+
+            $rewardDetail->reward_id = $request->reward_id;
+            $rewardDetail->user_id = $request->user_id;
+            $rewardDetail->is_claimed = "NO";
+            $rewardDetail->created_at = now();
+            $rewardDetail->updated_at = now();
+            $rewardDetail->save();
+            DB::commit();
+            return redirect()->route("index")->with("status", "Successfully bought reward!");
+        } else {
+            return redirect()->route("index")->with("status", "Insufficient points!");
+        }
     }
 
     /**

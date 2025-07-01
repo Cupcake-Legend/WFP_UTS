@@ -13,7 +13,9 @@ class RewardController extends Controller
      */
     public function index()
     {
-        //
+        $rewards = Reward::all();
+
+        return view("reward", compact("rewards"));
     }
 
     /**

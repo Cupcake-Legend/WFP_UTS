@@ -6,7 +6,7 @@
 
             @auth
                 @if (auth()->user()->roles !== 'admin')
-                    <a class="nav-btn" href="#">Reward</a>
+                    <a class="nav-btn" href="{{ route('reward.index') }}">Reward</a>
                     <a class="nav-btn" href="{{ route('checkout') }}">Checkout</a>
                 @endif
             @endauth

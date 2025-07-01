@@ -52,94 +52,98 @@
                                             data-bs-target="#collapseOrder{{ $order->id }}" aria-expanded="false"
                                             aria-controls="collapseOrder{{ $order->id }}">
                                             <div class="d-flex justify-content-between w-100">
-                                                <<div> <strong>Order #{{ $order->id }}</strong> <small
+                                                <div> <strong>Order #{{ $order->id }}</strong> <small
                                                         class="d-block text-muted">{{ $order->created_at?->format('d M Y, H:i') }}</small>
                                                     <span {{-- kalo process warna kuning kalau done jadi ijo --}}
                                                         class="badge @if ($order->status === 'PROCESS') bg-warning @elseif($order->status === 'DONE') bg-success @else bg-secondary @endif mt-1">
                                                         {{ $order->status }} </span>
+                                                </div>
+                                                <span
+                                                    class="badge bg-primary rounded-pill align-self-center me-3">Rp{{ number_format($order->total ?? 0) }}</span>
                                             </div>
-                                            <span
-                                                class="badge bg-primary rounded-pill align-self-center me-3">Rp{{ number_format($order->total ?? 0) }}</span>
-                                </div>
-                                </button>
-                                </h2>
+                                        </button>
+                                    </h2>
 
-                                <div id="collapseOrder{{ $order->id }}" class="accordion-collapse collapse"
-                                    aria-labelledby="headingOrder{{ $order->id }}"
-                                    data-bs-parent="#orderHistoryAccordion">
-                                    <div class="accordion-body">
-                                        <h6 class="mb-3">Detail Pesanan:</h6>
-                                        <table class="table table-sm">
-                                            <thead>
-                                                <tr>
-                                                    <th>Menu</th>
-                                                    <th class="text-center">Jumlah</th>
-                                                    <th class="text-end">Harga</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($order->orderDetails as $detail)
+                                    <div id="collapseOrder{{ $order->id }}" class="accordion-collapse collapse"
+                                        aria-labelledby="headingOrder{{ $order->id }}"
+                                        data-bs-parent="#orderHistoryAccordion">
+                                        <div class="accordion-body">
+                                            <h6 class="mb-3">Detail Pesanan:</h6>
+                                            <table class="table table-sm">
+                                                <thead>
                                                     <tr>
-                                                        <td>{{ $detail->menu->name ?? 'Menu Dihapus' }}</td>
-                                                        <td class="text-center">{{ $detail->quantity }}</td>
-                                                        <td class="text-end">
-                                                            Rp{{ number_format($detail->menu->harga ?? 0) }}</td>
+                                                        <th>Menu</th>
+                                                        <th class="text-center">Jumlah</th>
+                                                        <th class="text-end">Harga</th>
                                                     </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($order->orderDetails as $detail)
+                                                        <tr>
+                                                            <td>{{ $detail->menu->name ?? 'Menu Dihapus' }}</td>
+                                                            <td class="text-center">{{ $detail->quantity }}</td>
+                                                            <td class="text-end">
+                                                                Rp{{ number_format($detail->menu->harga ?? 0) }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
+                            @empty
+                                <p class="text-muted">Anda belum memiliki riwayat order.</p>
+                            @endforelse
                         </div>
-                    @empty
-                        <p class="text-muted">Anda belum memiliki riwayat order.</p>
-                        @endforelse
                     </div>
                 </div>
-            </div>
 
-            <div class="card border-0 shadow-sm">
-                <div class="card-body p-4">
-                    <h5 class="card-title mb-3">Reward yang Dimiliki</h5>
-                    @if ($user->rewards->count())
-                        <ul class="list-group list-group-flush">
-                            @foreach ($user->rewards as $rewardDetail)
-                                @if ($rewardDetail->reward)
-                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                        <div>
-                                            <strong>{{ $rewardDetail->reward->name }}</strong>
-                                            <small class="d-block text-muted">
-                                                Status:
-                                                @if ($rewardDetail->is_claimed == 'YES')
-                                                    <span class="text-success">Sudah Diklaim</span>
-                                                @else
-                                                    <span class="text-warning">Belum Diklaim</span>
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h5 class="card-title mb-3">Reward yang Dimiliki</h5>
+                        @if ($user->rewards->count())
+                            <ul class="list-group list-group-flush">
+                                @foreach ($user->rewards as $rewardDetail)
+                                    @if ($rewardDetail->reward)
+                                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                            <div>
+                                                <strong>{{ $rewardDetail->reward->name }}</strong>
+                                                <small class="d-block text-muted">
+                                                    Status:
+                                                    @if ($rewardDetail->is_claimed == 'YES')
+                                                        <span class="text-success">Sudah Diklaim</span>
+                                                    @else
+                                                        <span class="text-warning">Belum Diklaim</span>
+                                                    @endif
+                                                </small>
+                                                <small class = "d-block text-muted">Date:
+                                                    <span
+                                                        class = "text-success">{{ $rewardDetail->updated_at }}</span></small>
+                                            </div>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <span
+                                                    class="badge bg-success rounded-pill">+{{ $rewardDetail->reward->poin }}
+                                                    Poin</span>
+
+                                                @if ($rewardDetail->is_claimed !== 'YES')
+                                                    <form action="{{ route('reward.claim', $rewardDetail->reward->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-sm btn-primary">Claim</button>
+                                                    </form>
                                                 @endif
-                                            </small>
-                                        </div>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <span class="badge bg-success rounded-pill">+{{ $rewardDetail->reward->poin }}
-                                                Poin</span>
-
-                                            @if ($rewardDetail->is_claimed !== 'YES')
-                                                <form action="{{ route('reward.claim', $rewardDetail->reward->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-sm btn-primary">Claim</button>
-                                                </form>
-                                            @endif
-                                        </div>
-                                    </li>
-                                @endif
-                            @endforeach
-                        </ul>
-                    @else
-                        <p class="text-muted">Anda belum memiliki reward.</p>
-                    @endif
+                                            </div>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-muted">Anda belum memiliki reward.</p>
+                        @endif
+                    </div>
                 </div>
-            </div>
 
+            </div>
         </div>
-    </div>
     </div>
 @endsection

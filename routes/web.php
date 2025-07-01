@@ -77,6 +77,10 @@ Route::middleware(["auth", "role:admin"])->prefix("admin")->group(function () {
     Route::resource("paymentMethods", PaymentMethodController::class);
 
 
+    Route::resource("rewards", controller: RewardController::class)->except("index");
+    Route::resource("rewardDetails", RewardDetailController::class)->except("store");
+
+
 
     Route::prefix('reports')->group(function () {
         Route::get('/', [ReportController::class, 'index'])->name('reports.index');
@@ -107,7 +111,10 @@ Route::middleware(["auth", "role:user"])->group(function () {
     Route::put('/profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
 
 
+    Route::get('/reward', [RewardController::class, "index"])->name("reward.index");
     Route::post('/reward/claim/{rewardId}', [RewardController::class, "claimReward"])->name('reward.claim');
+    Route::post('/reward-details/store', [RewardDetailController::class, 'store'])->name('reward_details.store');
+
     // Route::get('/order', function () {
     //     return view('order');
     // });
@@ -119,7 +126,3 @@ Route::middleware(["auth", "role:user"])->group(function () {
 
 //ROUTE sg di bawah ini belum tk pikirin apa masuk user atau admin -cupcake legend
 Route::resource("notifications", NotificationController::class);
-
-Route::resource("rewards", controller: RewardController::class);
-
-Route::resource("rewardDetails", RewardDetailController::class);
