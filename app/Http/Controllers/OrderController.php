@@ -171,8 +171,7 @@ class OrderController extends Controller
     {
         $status = $request->input('status', 'PROCESS');
 
-        /** @var User $user */
-        $user = auth()->user();
+        $user = auth()->user()->id;
 
         $orders = $user->orders()
             ->where('status', $status)

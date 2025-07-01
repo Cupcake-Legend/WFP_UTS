@@ -47,14 +47,14 @@
             @if ($menus->count() > 0)
                 <div class="scrollable-products products d-flex gap-3">
                     @foreach ($menus as $menu)
-                        <div class="card h-100 shadow-sm" style="min-width: 250px; flex: 0 0 auto;">
+                        <div class="card h-100 shadow-sm" style="min-width:250px; max-width: 250px; flex: 0 0 auto;">
                             <img src="{{ asset('images/menus/' . $menu->image) }}" class="card-img-top"
                                 alt="{{ $menu->name }}" style="height: 200px; object-fit: cover;">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">{{ $menu->name }}</h5>
                                 <p class="card-text text-success fw-bold mt-auto">
                                     Rp{{ number_format($menu->harga, 0, ',', '.') }}</p>
-                                <button type="button" class="btn btn-outline-primary mt-2" data-bs-toggle="modal"
+                                <button type="button" class="nav-btn btn btn-outline-primary mt-2" data-bs-toggle="modal"
                                     data-bs-target="#menuModal" data-id="{{ $menu->id }}"
                                     data-name="{{ $menu->name }}" data-price="{{ $menu->harga }}"
                                     data-description="{{ $menu->deskripsi }}" data-image="{{ $menu->image }}"
@@ -142,7 +142,7 @@
         </div>
 
         <!-- Bestsellers Section -->
-        <section class="bestsellers bg-light p-5 rounded-3">
+        <section class="bestsellers p-5 rounded-3" style = "background-color: #f4f9f4;">
             <div class="row align-items-center">
                 <div class="col-lg-6 mb-4 mb-lg-0">
                     <h2 class="fw-bold mb-3">Try our bestsellers</h2>
@@ -151,24 +151,36 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="row g-3">
+                        <!-- Green Tea Card -->
                         <div class="col-md-6">
-                            <div class="card h-100 border-0 shadow-sm">
-                                <div class="card-body">
-                                    <h5 class="card-title">Earl Gray</h5>
-                                    <p class="card-text text-muted">Bold and Fruit Taste</p>
+                            <div class="card h-100 border-0 shadow-sm" style="background-color: #f4f9f4;">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Green Tea</h5>
+                                    <img src="{{ asset('images/menus/green_tea.jpg') }}" alt="Green Tea"
+                                        style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px;">
+                                    <p class="card-text text-muted mt-2">Enjoy the lightness and nourish your body with our
+                                        special Green Tea.</p>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Strawberry Smoothie Card -->
                         <div class="col-md-6">
-                            <div class="card h-100 border-0 shadow-sm">
-                                <div class="card-body">
-                                    <h5 class="card-title">Jasmine Tea</h5>
-                                    <p class="card-text text-muted">Light and Refreshing Taste</p>
+                            <div class="card h-100 border-0 shadow-sm" style="background-color: #f4f9f4;">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Strawberry Smoothie</h5>
+                                    <img src="{{ asset('images/menus/strawberry_smoothie.jpg') }}"
+                                        alt="Strawberry Smoothie"
+                                        style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px;">
+                                    <p class="card-text text-muted mt-2">A healthy strawberry smoothie to boost your
+                                        metabolism.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </section>
     </div>
