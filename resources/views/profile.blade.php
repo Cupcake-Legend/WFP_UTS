@@ -32,6 +32,50 @@
                         <h2 class="display-4 fw-bold">{{ $user->poin }}</h2>
                     </div>
                 </div>
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h5 class="card-title mb-3">Reward yang Dimiliki</h5>
+                        @if ($user->rewards->count())
+                            <ul class="list-group list-group-flush">
+                                @foreach ($user->rewards as $rewardDetail)
+                                    @if ($rewardDetail->reward)
+                                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                            <div>
+                                                <strong>{{ $rewardDetail->reward->name }}</strong>
+                                                <small class="d-block text-muted">
+                                                    Status:
+                                                    @if ($rewardDetail->is_claimed == 'YES')
+                                                        <span class="text-success">Sudah Diklaim</span>
+                                                    @else
+                                                        <span class="text-warning">Belum Diklaim</span>
+                                                    @endif
+                                                </small>
+                                                <small class = "d-block text-muted">Date:
+                                                    <span
+                                                        class = "text-success">{{ $rewardDetail->updated_at }}</span></small>
+                                            </div>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <span
+                                                    class="badge bg-success rounded-pill">+{{ $rewardDetail->reward->poin }}
+                                                    Poin</span>
+
+                                                @if ($rewardDetail->is_claimed !== 'YES')
+                                                    <form action="{{ route('reward.claim', $rewardDetail->reward->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-sm btn-primary">Claim</button>
+                                                    </form>
+                                                @endif
+                                            </div>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-muted">Anda belum memiliki reward.</p>
+                        @endif
+                    </div>
+                </div>
 
             </div>
 
@@ -98,50 +142,7 @@
                     </div>
                 </div>
 
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body p-4">
-                        <h5 class="card-title mb-3">Reward yang Dimiliki</h5>
-                        @if ($user->rewards->count())
-                            <ul class="list-group list-group-flush">
-                                @foreach ($user->rewards as $rewardDetail)
-                                    @if ($rewardDetail->reward)
-                                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                            <div>
-                                                <strong>{{ $rewardDetail->reward->name }}</strong>
-                                                <small class="d-block text-muted">
-                                                    Status:
-                                                    @if ($rewardDetail->is_claimed == 'YES')
-                                                        <span class="text-success">Sudah Diklaim</span>
-                                                    @else
-                                                        <span class="text-warning">Belum Diklaim</span>
-                                                    @endif
-                                                </small>
-                                                <small class = "d-block text-muted">Date:
-                                                    <span
-                                                        class = "text-success">{{ $rewardDetail->updated_at }}</span></small>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <span
-                                                    class="badge bg-success rounded-pill">+{{ $rewardDetail->reward->poin }}
-                                                    Poin</span>
 
-                                                @if ($rewardDetail->is_claimed !== 'YES')
-                                                    <form action="{{ route('reward.claim', $rewardDetail->reward->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        <button type="submit" class="btn btn-sm btn-primary">Claim</button>
-                                                    </form>
-                                                @endif
-                                            </div>
-                                        </li>
-                                    @endif
-                                @endforeach
-                            </ul>
-                        @else
-                            <p class="text-muted">Anda belum memiliki reward.</p>
-                        @endif
-                    </div>
-                </div>
 
             </div>
         </div>

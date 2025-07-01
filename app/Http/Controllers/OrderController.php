@@ -126,7 +126,7 @@ class OrderController extends Controller
         $order = Order::findOrFail($request->order_id);
 
         if ($order->status != "DONE") {
-            $order->status == "DONE";
+            $order->status = "DONE";
             $order->save();
             return redirect()->route('admin.dashboard')->with('Message', 'Order ' . $order->id . ' has been updated');
         } else {
@@ -165,5 +165,19 @@ class OrderController extends Controller
     {
         $order->orderDetails()->delete();
         $order->delete();
+    }
+
+    public function history(Request $request)
+    {
+        $status = $request->input('status', 'PROCESS');
+
+        $orders = auth()->user()
+            ->orders()
+            ->where('status', $status)
+            ->with('orderDetails.menu')
+            ->latest()
+            ->paginate(7);
+
+        return view('history', compact('orders', 'status'));
     }
 }

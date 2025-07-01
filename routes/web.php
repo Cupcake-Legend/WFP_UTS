@@ -117,6 +117,7 @@ Route::middleware(["auth", "role:user"])->group(function () {
     Route::get('/reward', [RewardController::class, "index"])->name("reward.index");
     Route::post('/reward/claim/{rewardId}', [RewardController::class, "claimReward"])->name('reward.claim');
     Route::post('/reward-details/store', [RewardDetailController::class, 'store'])->name('reward_details.store');
+    Route::get('/history', [OrderController::class, 'history'])->name('history');
 
     // Route::get('/order', function () {
     //     return view('order');

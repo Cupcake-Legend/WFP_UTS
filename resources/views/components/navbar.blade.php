@@ -8,6 +8,7 @@
                 @if (auth()->user()->roles !== 'admin')
                     <a class="nav-btn" href="{{ route('reward.index') }}">Reward</a>
                     <a class="nav-btn" href="{{ route('checkout') }}">Checkout</a>
+                    <a class="nav-btn" href="{{ route('history') }}">Orders</a>
                 @endif
             @endauth
         </div>
@@ -99,14 +100,16 @@
                             <label>Password</label>
                             <input type="password" name="password" class="form-control" minlength="6" required>
                         </div>
-                       <div class="mb-3">
+                        <div class="mb-3">
                             <label>Roles</label><br>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="roles" id="roleUser" value="user" required>
+                                <input class="form-check-input" type="radio" name="roles" id="roleUser"
+                                    value="user" required>
                                 <label class="form-check-label" for="roleUser">User</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="roles" id="roleAdmin" value="admin">
+                                <input class="form-check-input" type="radio" name="roles" id="roleAdmin"
+                                    value="admin">
                                 <label class="form-check-label" for="roleAdmin">Admin</label>
                             </div>
                         </div>
