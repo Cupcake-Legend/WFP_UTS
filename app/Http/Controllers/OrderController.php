@@ -60,9 +60,11 @@ class OrderController extends Controller
                 'order_method' => $request->order_method,
             ]);
 
+            $user = User::findOrFail($request->user_id);
+            $points = 0;
             foreach ($request->order_details as $orderDetail) {
                 $menu = Menu::findOrFail($orderDetail["menu_id"]);
-
+                $points += $menu->point;
                 if ($menu->stock < $orderDetail['quantity']) {
                     throw new Exception("Stok untuk {$menu->name} tidak mencukupi.");
                 }
@@ -78,9 +80,6 @@ class OrderController extends Controller
                 $menu->save();
             }
 
-            $points = ($request->total / 1000);
-
-            $user = User::findOrFail($request->user_id);
             $user->poin += $points;
             $user->save();
 
