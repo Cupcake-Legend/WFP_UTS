@@ -70,38 +70,6 @@
             @endif
         </section>
 
-
-        {{-- <section class="products mb-5">
-            @if ($menus->count() > 0)
-                <div class="d-flex flex-row gap-3">
-                    @foreach ($menus as $menu)
-                        <div class="col">
-                            <div class="card h-100 shadow-sm" style = "min-width: 250px;">
-                                <img src="{{ $menu->image ? asset('storage/' . $menu->image) : 'https://via.placeholder.com/300' }}"
-                                    class="card-img-top" alt="{{ $menu->name }}"
-                                    style="height: 200px; object-fit: cover;">
-                                <div class="card-body d-flex flex-column">
-                                    <h5 class="card-title">{{ $menu->name }}</h5>
-                                    <p class="card-text text-success fw-bold mt-auto">
-                                        Rp{{ number_format($menu->harga, 0, ',', '.') }}</p>
-                                    <button type="button" class="btn btn-outline-primary mt-2" data-bs-toggle="modal"
-                                        data-bs-target="#menuModal" data-id="{{ $menu->id }}"
-                                        data-name="{{ $menu->name }}" data-price="{{ $menu->harga }}"
-                                        data-description="{{ $menu->deskripsi }}"
-                                        data-image="{{ $menu->image ? asset('$menu->image') : 'https://via.placeholder.com/300' }}"
-                                        data-nutrition="{{ $menu->nutrisi }}">
-                                        View Details
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            @else
-                <div class="alert alert-info">No products found.</div>
-            @endif
-        </section> --}}
-
         <!-- Modal -->
         <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">

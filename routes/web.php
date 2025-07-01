@@ -30,19 +30,10 @@ use Illuminate\Support\Facades\Route;
 
 //ROUTE yang bisa diakses SEMUA
 Route::get("/", [MenuController::class, "index"])->name("index");
-Route::get('/info', function () {
-    return view('information');
-});
-// Route::get('/nutrition', function () {
-//     return view('nutrition');
-// });
-Route::get('/nutrition', [MenuController::class, 'nutrition']);
 
 Route::get('/filter-category', [MenuController::class, 'filterCategory']);
 
 Route::resource("users", UserController::class)->except("create", "index");
-
-
 
 
 // ROUTE KHUSUS yang belum LOGIN !! -cupcake legend
@@ -79,11 +70,8 @@ Route::middleware(["auth", "role:admin"])->prefix("admin")->group(function () {
     //PAYMENT METHODS
     Route::resource("paymentMethods", PaymentMethodController::class);
 
-
     Route::resource("rewards", controller: RewardController::class)->except("index");
     Route::resource("rewardDetails", RewardDetailController::class)->except("store");
-
-
 
     Route::prefix('reports')->group(function () {
         Route::get('/', [ReportController::class, 'index'])->name('reports.index');
@@ -98,7 +86,6 @@ Route::middleware(["auth", "role:admin"])->prefix("admin")->group(function () {
 //ROUTE KHUSUS USER!! -cupcake legend
 Route::middleware(["auth", "role:user"])->group(function () {
 
-    //utk orders sm orderdetails blm tk pikirin jg apa hanya user yg bisa akses atau admin apa ada akses apa -cupcake legend
     Route::resource("orders", OrderController::class);
 
     Route::resource("orderDetails", OrderDetailController::class);
@@ -119,12 +106,7 @@ Route::middleware(["auth", "role:user"])->group(function () {
     Route::post('/reward-details/store', [RewardDetailController::class, 'store'])->name('reward_details.store');
     Route::get('/history', [OrderController::class, 'history'])->name('history');
 
-    // Route::get('/order', function () {
-    //     return view('order');
-    // });
     Route::get('/pay', function () {
         return view('payment');
     });
 });
-
-
