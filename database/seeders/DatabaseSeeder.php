@@ -30,7 +30,6 @@ class DatabaseSeeder extends Seeder
             OrderSeeder::class,
             OrderDetailSeeder::class,
             RewardDetailSeeder::class,
-            NotificationSeeder::class
         ]);
     }
 }
