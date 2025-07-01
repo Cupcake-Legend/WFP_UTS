@@ -54,7 +54,6 @@ class UserController extends Controller
             'no_hp' => 'required|string',
             'alamat' => 'required|string',
             'password' => 'required|string|min:6',
-            'roles' => 'required|in:admin,user',
         ]);
 
         User::create([
@@ -63,7 +62,7 @@ class UserController extends Controller
             'no_hp' => $validated['no_hp'],
             'alamat' => $validated['alamat'],
             'password' => Hash::make($validated['password']),
-            'roles' => $validated['roles'],
+            'roles' => 'user',
             'poin' => 0,
         ]);
 

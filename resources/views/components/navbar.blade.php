@@ -90,7 +90,7 @@
                         </div>
                         <div class="mb-3">
                             <label>No HP</label>
-                            <input type="text" name="no_hp" class="form-control" required>
+                            <input type="text" name="no_hp" class="form-control" pattern="[0-9]+" required>
                         </div>
                         <div class="mb-3">
                             <label>Alamat</label>
@@ -99,19 +99,6 @@
                         <div class="mb-3">
                             <label>Password</label>
                             <input type="password" name="password" class="form-control" minlength="6" required>
-                        </div>
-                        <div class="mb-3">
-                            <label>Roles</label><br>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="roles" id="roleUser"
-                                    value="user" required>
-                                <label class="form-check-label" for="roleUser">User</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="roles" id="roleAdmin"
-                                    value="admin">
-                                <label class="form-check-label" for="roleAdmin">Admin</label>
-                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
