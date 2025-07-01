@@ -2,8 +2,8 @@
     <div class="scrollable-products d-flex gap-3">
         @foreach ($menus as $menu)
             <div class="card h-100 shadow-sm" style="min-width: 250px; flex: 0 0 auto;">
-                <img src="{{ $menu->image ? asset('storage/' . $menu->image) : 'https://via.placeholder.com/300' }}"
-                    class="card-img-top" alt="{{ $menu->name }}" style="height: 200px; object-fit: cover;">
+                <img src="{{ asset('images/menus/' . $menu->image) }}" class="card-img-top" alt="{{ $menu->name }}"
+                    style="height: 200px; object-fit: cover;">
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">{{ $menu->name }}</h5>
                     <p class="card-text text-success fw-bold mt-auto">
@@ -11,8 +11,7 @@
                     <button type="button" class="btn btn-outline-primary mt-2" data-bs-toggle="modal"
                         data-bs-target="#menuModal" data-id="{{ $menu->id }}" data-name="{{ $menu->name }}"
                         data-price="{{ $menu->harga }}" data-description="{{ $menu->deskripsi }}"
-                        data-image="{{ $menu->image ? asset($menu->image) : 'https://via.placeholder.com/300' }}"
-                        data-nutrition="{{ $menu->nutrisi }}">
+                        data-image="{{ $menu->image }}" data-nutrition="{{ $menu->nutrisi }}">
                         View Details
                     </button>
                 </div>

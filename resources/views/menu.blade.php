@@ -187,12 +187,13 @@
                 var menuDescription = button.data('description');
                 var menuImage = button.data('image');
                 var menuNutrition = button.data('nutrition');
+                var imageUrl = "{{ asset('images/menus') }}/" + menuImage;
 
                 var modal = $(this);
                 modal.find('#modal-name').text(menuName);
                 modal.find('#modal-price').text('Rp ' + menuPrice.toLocaleString('id-ID'));
                 modal.find('#modal-description').text(menuDescription);
-                modal.find('#modal-image').attr('src', '{{ asset('images/menus/menuImage') }}');
+                modal.find('#modal-image').attr('src', imageUrl);
                 modal.find('#modal-nutrition').text(menuNutrition);
 
 
