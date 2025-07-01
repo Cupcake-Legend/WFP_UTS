@@ -54,7 +54,14 @@ class UserController extends Controller
             'no_hp' => 'required|string',
             'alamat' => 'required|string',
             'password' => 'required|string|min:6',
+            'confirm' => 'required|string|min:6',
         ]);
+
+        if ($request->confirm !== $request->password) {
+            return redirect()->back()
+            ->withInput()
+            ->with("error", "Passwords do not match!");
+        }
 
         User::create([
             'name' => $validated['name'],
@@ -66,7 +73,7 @@ class UserController extends Controller
             'poin' => 0,
         ]);
 
-        return redirect()->route('index')->with("Message", "Account have been created");
+        return redirect()->route('index')->with("success", "Account have been created");
     }
 
 

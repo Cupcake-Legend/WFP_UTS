@@ -31,7 +31,7 @@
             <div class="tab-pane fade show active" id="categories" role="tabpanel">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>Categories</h2>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                    <button class="nav-btn" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
                         <i class="fas fa-plus"></i> Add Category
                     </button>
                 </div>
@@ -99,7 +99,7 @@
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
                                                                     data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit" class="btn btn-primary">Update
+                                                                <button type="submit" class="nav-btn">Update
                                                                     Category</button>
                                                             </div>
                                                         </form>
@@ -120,7 +120,7 @@
             <div class="tab-pane fade" id="menus" role="tabpanel">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>Menus</h2>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMenuModal">
+                    <button class="nav-btn" data-bs-toggle="modal" data-bs-target="#addMenuModal">
                         <i class="fas fa-plus"></i> Add Menu
                     </button>
                 </div>
@@ -286,7 +286,7 @@
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
                                                                     data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit" class="btn btn-primary">Update
+                                                                <button type="submit" class="nav-btn">Update
                                                                     Menu</button>
                                                             </div>
                                                         </form>
@@ -306,7 +306,7 @@
             <div class="tab-pane fade" id="rewards" role="tabpanel">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>Rewards</h2>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRewardModal">
+                    <button class="nav-btn" data-bs-toggle="modal" data-bs-target="#addRewardModal">
                         <i class="fas fa-plus"></i> Add Reward
                     </button>
                 </div>
@@ -354,7 +354,7 @@
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                 aria-label="Close"></button>
                                                         </div>
-                                                        <form action="{{ route('categories.update', $reward->id) }}"
+                                                        <form action="{{ route('rewards.update', $reward->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('PUT')
@@ -389,7 +389,7 @@
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
                                                                     data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit" class="btn btn-primary">Update
+                                                                <button type="submit" class="nav-btn">Update
                                                                     Reward</button>
                                                             </div>
                                                         </form>
@@ -507,7 +507,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save Category</button>
+                        <button type="submit" class="nav-btn">Save Category</button>
                     </div>
                 </form>
             </div>
@@ -554,15 +554,7 @@
                                     <label for="menuPoints" class="form-label">Points</label>
                                     <input type="number" class="form-control" id="menuPoints" name="point" required>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="menuPortion" class="form-label">Portion</label>
-                                    <select class="form-select" id="menuPortion" name="porsi" required>
-                                        <option value="" disabled selected>Select portion</option>
-                                        <option value="Small">Small</option>
-                                        <option value="Medium">Medium</option>
-                                        <option value="Large">Large</option>
-                                    </select>
-                                </div>
+                               
                                 <div class="mb-3">
                                     <label for="menuImage" class="form-label">Image</label>
                                     <input type="file" class="form-control" id="menuImage" name="image">
@@ -581,7 +573,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save Menu</button>
+                        <button type="submit" class="nav-btn">Save Menu</button>
                     </div>
                 </form>
             </div>
@@ -621,7 +613,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save Reward</button>
+                        <button type="submit" class="nav-btn">Save Reward</button>
                     </div>
                 </form>
             </div>

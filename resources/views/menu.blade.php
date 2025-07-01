@@ -9,12 +9,6 @@
             color: white;
         }
     </style>
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
 
     <div class="container py-4">
         <!-- Hero Section -->
@@ -54,7 +48,7 @@
                                 <h5 class="card-title">{{ $menu->name }}</h5>
                                 <p class="card-text text-success fw-bold mt-auto">
                                     Rp{{ number_format($menu->harga, 0, ',', '.') }}</p>
-                                <button type="button" class="nav-btn btn btn-outline-primary mt-2" data-bs-toggle="modal"
+                                <button type="button" class="nav-btn mt-2" data-bs-toggle="modal"
                                     data-bs-target="#menuModal" data-id="{{ $menu->id }}"
                                     data-name="{{ $menu->name }}" data-price="{{ $menu->harga }}"
                                     data-description="{{ $menu->deskripsi }}" data-image="{{ $menu->image }}"
@@ -97,7 +91,7 @@
                                 id="add-to-cart-form" data-action="{{ route('cart.add', ['menu' => '__menu_id__']) }}">
                                 @csrf
                                 <input type="hidden" name="menu_id" id="hidden-menu-id">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="nav-btn">
                                     <i class="bi bi-cart-plus"></i> Add to Cart
                                 </button>
                             </form>

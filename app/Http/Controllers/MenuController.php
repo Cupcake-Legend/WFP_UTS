@@ -57,8 +57,8 @@ class MenuController extends Controller
         $menu->harga = $request->harga;
         $menu->nutrisi = $request->nutrisi;
         $menu->point = $request->point;
-        $menu->porsi = $request->porsi;
         $menu->category_id = $request->category_id;
+        $menu->stock = $request->stock;
 
         $menu->image = 'default.jpg';
         $menu->save();
@@ -76,10 +76,10 @@ class MenuController extends Controller
 
             $file->move($path, $filename);
             $menu->image = $filename;
-            $menu->save(); 
+            $menu->save();
         }
 
-        return redirect()->route('admin.dashboard')->with('Message', 'Menu '.$menu->name.' has been added');
+        return redirect()->route('admin.dashboard')->with('success', 'Menu ' . $menu->name . ' has been added');
     }
 
 
@@ -136,7 +136,7 @@ class MenuController extends Controller
 
         $menu->save();
 
-        return redirect()->route('admin.dashboard')->with('Message', 'Menu '.$menu->name.' has been updated');
+        return redirect()->route('admin.dashboard')->with('success', 'Menu ' . $menu->name . ' has been updated');
     }
 
 
@@ -156,7 +156,7 @@ class MenuController extends Controller
 
         $menu->delete();
 
-        return redirect()->route('admin.dashboard')->with('Message', 'Menu '.$menu->name.' has been deleted');
+        return redirect()->route('admin.dashboard')->with('success', value: 'Menu ' . $menu->name . ' has been deleted');
     }
 
     public function filterCategory(Request $request)

@@ -42,13 +42,29 @@
             <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header bg-success text-white">
                     <i class="bi bi-check-circle-fill me-2"></i>
-                    <strong class="me-auto">Sukses</strong>
-                    <small>Baru saja</small>
+                    <strong class="me-auto">Success</strong>
+                    <small>Just now</small>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"
                         aria-label="Close"></button>
                 </div>
                 <div class="toast-body">
                     {{ session('success') }}
+                </div>
+            </div>
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1080">
+            <div id="errorToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header bg-danger text-white">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    <strong class="me-auto">Failed</strong>
+                    <small>Baru saja</small>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {{ session('error') }}
                 </div>
             </div>
         </div>
@@ -63,6 +79,15 @@
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const successToastEl = document.getElementById('successToast');
+                const successToast = new bootstrap.Toast(successToastEl);
+                successToast.show();
+            });
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const successToastEl = document.getElementById('errorToast');
                 const successToast = new bootstrap.Toast(successToastEl);
                 successToast.show();
             });

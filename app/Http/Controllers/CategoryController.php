@@ -39,7 +39,7 @@ class CategoryController extends Controller
         $category->deskripsi = $request->deskripsi;
         $category->save();
 
-        return redirect()->route('admin.dashboard')->with('Message', 'Category '.$category->name.' has been added');
+        return redirect()->route('admin.dashboard')->with('success', 'Category ' . $category->name . ' has been added');
     }
 
     /**
@@ -66,8 +66,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->deskripsi = $request->deskripsi;
         $category->save();
-
-        return redirect()->route('admin.dashboard')->with('Message', 'Category '.$category->name.' has been updated');
+        return redirect()->route('admin.dashboard')->with('success', 'Category ' . $category->name . ' has been updated');
     }
 
     /**
@@ -79,6 +78,6 @@ class CategoryController extends Controller
         $category->deskripsi;
         $category->delete();
 
-        return redirect()->route('admin.dashboard')->with('Message', 'Category '.$category->name.' has been deleted');
+        return redirect()->route('admin.dashboard')->with('success', 'Category ' . $category->name . ' has been deleted');
     }
 }

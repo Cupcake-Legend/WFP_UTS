@@ -20,7 +20,6 @@ class Menu extends Model
         "nutrisi",
         "stock",
         "poin",
-        "porsi",
         "category_id"
     ];
 

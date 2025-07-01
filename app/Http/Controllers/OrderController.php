@@ -128,9 +128,9 @@ class OrderController extends Controller
         if ($order->status != "DONE") {
             $order->status = "DONE";
             $order->save();
-            return redirect()->route('admin.dashboard')->with('Message', 'Order ' . $order->id . ' has been updated');
+            return redirect()->route('admin.dashboard')->with('success', 'Order ' . $order->id . ' has been updated');
         } else {
-            return redirect()->route('admin.dashboard')->with('Message', 'Order ' . $order->id . ' already updated');
+            return redirect()->route('admin.dashboard')->with('success', value: 'Order ' . $order->id . ' already updated');
         }
     }
 

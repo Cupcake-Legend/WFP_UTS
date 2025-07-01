@@ -44,7 +44,7 @@ class RewardController extends Controller
 
         $reward->save();
 
-        return redirect()->route('admin.dashboard')->with('Message', 'Reward ' . $reward->name . ' has been added');
+        return redirect()->route('admin.dashboard')->with('success', 'Reward ' . $reward->name . ' has been added');
     }
 
     public function claimReward($rewardId)
@@ -53,7 +53,7 @@ class RewardController extends Controller
             ->where('user_id', auth()->id())
             ->update(['is_claimed' => 'YES']);
 
-        return redirect()->route("index");
+        return redirect()->route("index")->with("success", "Reward claimed successfully!");
     }
 
     /**
@@ -82,6 +82,7 @@ class RewardController extends Controller
         $reward->menu_id = $request->menu_id;
 
         $reward->save();
+        return redirect()->route('admin.dashboard')->with('success', 'Reward ' . $reward->name . ' has been updated');
     }
 
     /**
@@ -92,6 +93,6 @@ class RewardController extends Controller
         $reward->name;
         $reward->delete();
 
-        return redirect()->route('admin.dashboard')->with('Message', 'Reward ' . $reward->name . ' has been deleted');
+        return redirect()->route('admin.dashboard')->with('success', 'Reward ' . $reward->name . ' has been deleted');
     }
 }
