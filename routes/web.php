@@ -126,5 +126,3 @@ Route::middleware(["auth", "role:user"])->group(function () {
 });
 
 
-//ROUTE sg di bawah ini belum tk pikirin apa masuk user atau admin -cupcake legend
-Route::resource("notifications", NotificationController::class);
