@@ -54,9 +54,9 @@ class RewardDetailController extends Controller
             $rewardDetail->updated_at = now();
             $rewardDetail->save();
             DB::commit();
-            return redirect()->route("index")->with("status", "Successfully bought reward!");
+            return redirect()->route("index")->with("success", "Successfully bought reward!");
         } else {
-            return redirect()->route("index")->with("status", "Insufficient points!");
+            return redirect()->route("index")->with("error", "Insufficient points!");
         }
     }
 

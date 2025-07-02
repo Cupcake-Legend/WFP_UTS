@@ -4,10 +4,6 @@
     <div class="container py-5">
         <h3 class="mb-3">Thank you! 🎉</h3>
 
-        <div class="alert alert-success">
-            Your order has been placed successfully.
-        </div>
-
         <div class="card mb-4">
             <div class="card-body">
                 <p><strong>Order ID:</strong> #{{ $order->id }}</p>

@@ -23,6 +23,8 @@ class OrderController extends Controller
         return view('order', compact('menus'));
     }
 
+    
+
     /**
      * Show the form for creating a new resource.
      */
@@ -87,9 +89,8 @@ class OrderController extends Controller
             DB::commit();
             $request->session()->forget('cart');
             // return redirect()->route("index");
-            return view('order', [
-                'order' => $order->load('orderDetails.menu', 'paymentMethod')
-            ]);
+            return redirect()->route("orders.show", $order)->with("success", "Order placed successfully!");
+           
         } catch (Exception $ex) {
             DB::rollBack();
             return back()->withErrors(['error' => 'Order failed. Please try again.']);
